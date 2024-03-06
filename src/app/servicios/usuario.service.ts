@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class UsuarioService {
 
-  url = 'http://localhost/nesym01/src/app/php/usuario/';
+  url = 'http://localhost/Nesym01/src/app/php/usuario/';
   constructor(private http: HttpClient) { }
 
   consultar() {

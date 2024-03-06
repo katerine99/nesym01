@@ -1,0 +1,67 @@
+
+<h1>USUARIO</h1>
+
+<button class="btn btn-primary" (click)="mostrar(1)">insertar Usuario</button><br><br>
+
+<div id="formulario" *ngIf="verf==true">
+
+<div class="row">
+  <div class="col-lg-6">
+    <input type="text" id="nombre" class="form-control" [(ngModel)]="user.nombre">
+  </div>
+  <div class="col-lg-6">
+    <input type="password" id="usuario" class="form-control" [(ngModel)]="user.clave">
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    <input type="email" id="clave" class="form-control" [(ngModel)]="user.correo">
+  </div>
+  <div class="col-lg-6">
+    <select id="cargo" class="form-control form-select" [(ngModel)]="user.cargo">
+
+      <option value="administrador" label="administrador">administraor</option>
+      <option value="general" label="general">general</option>
+    </select>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-3">
+    <button class="btn btn-primary" (click)="ingresar()">guardar</button>
+  </div>
+  <div class="col-lg-3">
+    <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+</div>
+
+<br>
+<div class="table-responsive">
+  <table class="table table-success table-striped" border="1">
+    <tr>
+      <th>nombre</th>
+      <th>Correo</th>
+      <th>Cargo</th>
+      <th>Acciones</th>
+    </tr>
+    <!-- mostrar los usuarios -->
+    <tr *ngFor="let item of usuario">
+      <td>{{item.nombre}}</td>
+      <td>{{item.correo}}</td>
+      <td>{{item.cargo}}</td>
+      <td>
+      Editar
+      -
+      Eliminar
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+
+
+

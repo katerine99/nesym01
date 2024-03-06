@@ -8,8 +8,8 @@ $params = json_decode($json);
 
 require ("../conexion.php");
 
- $ins = "INSERT INTO usuario (nombre, clave, correo, cargo) VALUES ('juan', SHA1('12345'), 'juan2@hotmail.com','invitado')";
-//$ins = "INSERT INTO  usuario(nombre, clave, correo,cargo) VALUES ('$params ->nombre', SHA1('$params->clave'),'$params->correo','$params->cargo')";
+ //$ins = "INSERT INTO usuario (nombre, clave, correo, cargo) VALUES ('juan', SHA1('12345'), 'juan2@hotmail.com','invitado')";
+$ins = "INSERT INTO  usuario(nombre, clave, correo,cargo) VALUES ('$params->nombre',('$params->clave'),'$params->correo','$params->cargo')";
 
 
 mysqli_query ($conexion,$ins) or die ("no inserto");
