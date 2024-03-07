@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.scss']
 })
-export class UsuarioComponent implements OnInit{
+export class UsuarioComponent implements OnInit {
 
   //variables globales
   verf = false;
@@ -18,6 +19,11 @@ export class UsuarioComponent implements OnInit{
     cargo: ""
   };
 
+  //para validar
+  validnombre = true;
+  validclave = true;
+  validcorreo = true;
+  validcargo = true;
 
   constructor(private suser: UsuarioService) { }
 
@@ -26,7 +32,7 @@ export class UsuarioComponent implements OnInit{
     this.limpiar();
 
   }
-//mostrar formulario
+  //mostrar formulario
   mostrar(dato: any) {
     switch (dato) {
       case 0:
@@ -45,7 +51,31 @@ export class UsuarioComponent implements OnInit{
     this.user.correo = "";
     this.user.cargo = ""
   }
+  //validar
+  validar() {
+    if (this.user.nombre == "") {
+      this.validnombre = false;
+    }else{
+      this.validnombre = true;
+    }
+if (this.user.clave == "") {
+      this.validclave = false;
+    }else{
+      this.validclave = true;
+}
+    if (this.user.correo == "") {
+      this.validcorreo = false;
+    }else{
+      this.validcorreo = true;
+    }
+    if (this.user.cargo == "") {
+      this.validcargo = false;
+    }else{
+      this.validcargo = true;
+    }
 
+
+  }
 
 
   consulta() {
@@ -56,7 +86,10 @@ export class UsuarioComponent implements OnInit{
 }
   ingresar() {
     //console.log(this.cat);
-    this.suser.insertar(this.user).subscribe((datos: any) => {
+    this.validar();
+    if (this.validnombre == true && this.validclave == true && this.validcorreo == true && this.validcargo == true) {
+
+      this.suser.insertar(this.user).subscribe((datos: any) => {
       if (datos['resultado'] == 'OK') {
         //alert(datos['mensaje']);
         this.consulta();
@@ -65,9 +98,43 @@ export class UsuarioComponent implements OnInit{
     this.mostrar(0);
     this.limpiar();
 
+}
+
+
 
 
 }
+
+  pregunta(id: any, nombre: any) {
+    console.log("entro con el id" + id);
+  Swal.fire({
+  title: "¿ Esta seguro de eliminar el usuario "+nombre+"?",
+  text: "El proceso no podra ser revertido!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Si, Eliminar!"
+}).then((result) => {
+  if (result.isConfirmed) {
+    this.borrarusuario(id);
+    Swal.fire({
+      title: "Eliminado!",
+      text: "El usuario ha sido eliminado.",
+      icon: "success"
+    });
+  }
+});
+  }
+
+  borrarusuario(id: any) {
+    this.suser.eliminar(id).subscribe((datos: any) => {
+      if (datos['resultado'] == 'OK') {
+        this.consulta();
+      }
+    });
+}
+
 
 
 }

@@ -7,22 +7,25 @@
 
 <div class="row">
   <div class="col-lg-6">
-    <input type="text" id="nombre" class="form-control" [(ngModel)]="user.nombre">
+    <input type="text" id="nombre" class="form-control" [(ngModel)]="user.nombre"><br>
+    <span style="color: red;" *ngIf="validnombre==false">insertar nombre</span>
   </div>
   <div class="col-lg-6">
-    <input type="password" id="usuario" class="form-control" [(ngModel)]="user.clave">
+    <input type="password" id="clave" class="form-control" [(ngModel)]="user.clave"><br>
+    <span style="color: red;" *ngIf="validclave==false">insertar clave</span>
   </div>
 </div>
 <div class="row">
   <div class="col-lg-6">
-    <input type="email" id="clave" class="form-control" [(ngModel)]="user.correo">
+    <input type="email" id="correo" class="form-control" [(ngModel)]="user.correo"><br>
+    <span style="color: red;" *ngIf="validcorreo==false">insertar correo</span>
   </div>
   <div class="col-lg-6">
     <select id="cargo" class="form-control form-select" [(ngModel)]="user.cargo">
-
-      <option value="administrador" label="administrador">administraor</option>
+ <option value="administrador" label="administrador">administraor</option>
       <option value="general" label="general">general</option>
-    </select>
+    </select><br>
+    <span style="color: red;" *ngIf="validcargo==false">elegir el cargo</span>
   </div>
 
 </div>
@@ -53,9 +56,14 @@
       <td>{{item.correo}}</td>
       <td>{{item.cargo}}</td>
       <td>
-      Editar
-      -
-      Eliminar
+        <a>
+      <span class="fas fa-edit Editar" title="Editar"></span>
+      </a>
+
+      <a (click)="pregunta(item.id_usuario, item.nombre)">
+
+      <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+      </a>
       </td>
     </tr>
   </table>
