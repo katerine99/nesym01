@@ -14,7 +14,7 @@ export class UsuarioService {
 
   }
 
-  insertar(articulo: any) {
+  insertar(articulo:any) {
 
     return this.http.post(`${this.url}insertar.php`, JSON.stringify(articulo));
 
@@ -25,8 +25,8 @@ export class UsuarioService {
 
   }
 
-  edit(datos: any) {
+  editar(datos:any, id:number) {
 
-    return this.http.post(`${this.url}editar.php`, JSON.stringify(datos));
+    return this.http.post(`${this.url}editar.php?id=${id}`, JSON.stringify(datos));
   }
 }

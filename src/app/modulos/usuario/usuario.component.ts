@@ -12,6 +12,7 @@ export class UsuarioComponent implements OnInit {
   //variables globales
   verf = false;
   usuario: any;
+  iduser: any;
   user = {
     nombre: "",
     clave: "",
@@ -24,7 +25,7 @@ export class UsuarioComponent implements OnInit {
   validclave = true;
   validcorreo = true;
   validcargo = true;
-
+  beditar = false;
   constructor(private suser: UsuarioService) { }
 
   ngOnInit(): void {
@@ -37,6 +38,9 @@ export class UsuarioComponent implements OnInit {
     switch (dato) {
       case 0:
         this.verf = false;
+        this.beditar = false;
+        this.iduser = "";
+        this.limpiar();
         break;
       case 1:
         this.verf = true;
@@ -135,6 +139,31 @@ if (this.user.clave == "") {
     });
 }
 
+  cargardatos(datos:any, id:number) {
+    //console.log(datos);
+    this.user.nombre = datos.nombre;
+    this.user.clave = datos.clave;
+    this.user.correo = datos.correo;
+    this.user.cargo = datos.cargo;
+    this.iduser = id;
+    this.mostrar(1);
+    this.beditar=true;
+}
 
+  editar() {
+    //console.log(this.cat);
+    this.validar();
 
+    if(this.validnombre==true && this.validclave==true && this.validcorreo==true && this.validcargo==true) {
+
+      this.suser.editar(this.user, this.iduser).subscribe((datos: any) => {
+      if (datos['resultado'] == 'OK') {
+        //alert(datos['mensaje']);
+        this.consulta();
+      }
+    });
+    this.mostrar(0);
+}
+
+  }
 }

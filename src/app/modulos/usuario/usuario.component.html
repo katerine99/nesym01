@@ -32,7 +32,8 @@
 <div class="row">
   <div class="col-lg-3"></div>
   <div class="col-lg-3">
-    <button class="btn btn-primary" (click)="ingresar()">guardar</button>
+    <button  *ngIf="beditar==false"  class="btn btn-primary" (click)="ingresar()">guardar</button>
+    <button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">editar</button>
   </div>
   <div class="col-lg-3">
     <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
@@ -56,7 +57,7 @@
       <td>{{item.correo}}</td>
       <td>{{item.cargo}}</td>
       <td>
-        <a>
+        <a (click)="cargardatos(item, item.id_usuario)">
       <span class="fas fa-edit Editar" title="Editar"></span>
       </a>
 
