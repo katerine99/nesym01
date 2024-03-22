@@ -1,0 +1,46 @@
+#fondo {
+
+  background-image: url(../../../assets/images/neuto.png);
+  background-size: cover;
+  height: 100vh;
+  padding-top: 300px;
+  background-repeat: no-repeat;
+
+
+}
+
+#form {
+  width: 350px;
+  text-align: center;
+margin: 0 auto;
+padding: 20px;
+background-color: rgba(255, 255, 255, 0.8);
+border-radius: 5px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+input {
+  margin-top: 10px;
+  padding:8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  width: 100%;
+  box-sizing: border-box;
+
+}
+
+button {
+margin-top: 10px;
+padding: 8px 16px;
+border: none;
+border-radius: 3px;
+background-color: #007bff;
+color: white;
+cursor: pointer;
+
+}
+
+button:hover {
+background-color: #0056b3;
+}

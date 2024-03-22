@@ -1,1 +1,16 @@
-<p>login works!</p>
+<div id="fondo">
+
+    <div id="form">
+      <input type="email" id="usuario" placeholder="email" class="form-control" [(ngModel)]="email" >
+
+      <input type="password" id="clave"  placeholder="contraseña" class="form-control" [(ngModel)]="clave">
+      <div class="col-12">
+
+  <span  *ngIf="error==true" style="color: red;" > email o contraseña incorrecta</span><br>
+      </div>
+
+<input type="button" value="Ingresar" class="btn btn-warning btn-block" value="iniciar sesion" (click)="consulta()">
+
+    </div>
+
+

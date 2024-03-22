@@ -2,9 +2,8 @@
 $servidor = "localhost";
 $usuario = "root";
 $clave = "";
-$bd= "nesym";
+$bd = "nesym01";
 
-$conexion = mysqli_connect($servidor,$usuario,$clave) or die ("no_se_conecto_a_mysql");
-mysqli_select_db($conexion, $bd)or die ("no_encotro_la_base_de_datos")
-
-?>
+$conexion = mysqli_connect($servidor, $usuario, $clave) or die("no se conecto a mysql");
+mysqli_select_db($conexion, $bd) or die("no encotro la base de datos")
+or die(mysqli_error($conexion));

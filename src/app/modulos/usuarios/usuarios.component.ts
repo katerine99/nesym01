@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { UsuarioService } from 'src/app/servicios/usuarios.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',
-  templateUrl: './usuario.component.html',
-  styleUrls: ['./usuario.component.scss']
+  templateUrl: './usuarios.component.html',
+  styleUrls: ['./usuarios.component.scss']
 })
 export class UsuarioComponent implements OnInit {
 
@@ -16,14 +16,14 @@ export class UsuarioComponent implements OnInit {
   user = {
     nombre: "",
     clave: "",
-    correo: "",
+    usuario: "",
     cargo: ""
   };
 
   //para validar
   validnombre = true;
   validclave = true;
-  validcorreo = true;
+  validusuario= true;
   validcargo = true;
   beditar = false;
   constructor(private suser: UsuarioService) { }
@@ -52,7 +52,7 @@ export class UsuarioComponent implements OnInit {
   limpiar() {
     this.user.nombre = "";
     this.user.clave = "";
-    this.user.correo = "";
+    this.user.usuario = "";
     this.user.cargo = ""
   }
   //validar
@@ -67,10 +67,10 @@ if (this.user.clave == "") {
     }else{
       this.validclave = true;
 }
-    if (this.user.correo == "") {
-      this.validcorreo = false;
+    if (this.user.usuario == "") {
+      this.validusuario = false;
     }else{
-      this.validcorreo = true;
+      this.validusuario= true;
     }
     if (this.user.cargo == "") {
       this.validcargo = false;
@@ -91,45 +91,47 @@ if (this.user.clave == "") {
   ingresar() {
     //console.log(this.cat);
     this.validar();
-    if (this.validnombre == true && this.validclave == true && this.validcorreo == true && this.validcargo == true) {
+    if (this.validnombre == true && this.validclave == true && this.validusuario == true && this.validcargo == true) {
 
       this.suser.insertar(this.user).subscribe((datos: any) => {
-      if (datos['resultado'] == 'OK') {
-        //alert(datos['mensaje']);
-        this.consulta();
-      }
-    });
-    this.mostrar(0);
-    this.limpiar();
-
-}
-
-
+        if (datos['resultado'] == 'OK') {
+          //alert(datos['mensaje']);
+          this.consulta();
+        }
+      });
+      this.mostrar(0);
+      this.limpiar();
+    }
+  }
 
 
-}
+
+
 
   pregunta(id: any, nombre: any) {
     console.log("entro con el id" + id);
-  Swal.fire({
-  title: "¿ Esta seguro de eliminar el usuario "+nombre+"?",
-  text: "El proceso no podra ser revertido!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Si, Eliminar!"
-}).then((result) => {
-  if (result.isConfirmed) {
-    this.borrarusuario(id);
     Swal.fire({
-      title: "Eliminado!",
-      text: "El usuario ha sido eliminado.",
-      icon: "success"
+      title: "¿ Esta seguro de eliminar el usuario " + nombre + "?",
+      text: "El proceso no podra ser revertido!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, Eliminar!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.borrarusuario(id);
+        Swal.fire({
+          title: "Eliminado!",
+          text: "El usuario ha sido eliminado.",
+          icon: "success"
+        });
+      }
     });
   }
-});
-  }
+
+
+
 
   borrarusuario(id: any) {
     this.suser.eliminar(id).subscribe((datos: any) => {
@@ -137,33 +139,34 @@ if (this.user.clave == "") {
         this.consulta();
       }
     });
-}
+ }
 
   cargardatos(datos:any, id:number) {
     //console.log(datos);
     this.user.nombre = datos.nombre;
     this.user.clave = datos.clave;
-    this.user.correo = datos.correo;
+    this.user.usuario= datos.usuario
     this.user.cargo = datos.cargo;
     this.iduser = id;
     this.mostrar(1);
     this.beditar=true;
-}
+ }
 
   editar() {
     //console.log(this.cat);
     this.validar();
 
-    if(this.validnombre==true && this.validclave==true && this.validcorreo==true && this.validcargo==true) {
+    if (this.validnombre == true && this.validclave == true && this.validusuario == true && this.validcargo == true) {
 
       this.suser.editar(this.user, this.iduser).subscribe((datos: any) => {
-      if (datos['resultado'] == 'OK') {
-        //alert(datos['mensaje']);
-        this.consulta();
-      }
-    });
-    this.mostrar(0);
-}
+        if (datos['resultado'] == 'OK') {
 
+          this.consulta();
+        }
+      })
+      this.mostrar(0);
+    }
   }
+
+
 }
