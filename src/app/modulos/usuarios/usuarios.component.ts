@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from 'src/app/servicios/usuarios.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,7 +26,7 @@ export class UsuarioComponent implements OnInit {
   validusuario= true;
   validcargo = true;
   beditar = false;
-  constructor(private suser: UsuarioService) { }
+  constructor (private suser: UsuarioService) {}
 
   ngOnInit(): void {
     this.consulta();

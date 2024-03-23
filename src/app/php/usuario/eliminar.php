@@ -5,14 +5,11 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 
 require ("../conexion.php");
 
- $del =  'DELETE FROM usuarios WHERE id_usuario=' .$_GET ["id"];
-
-Class Result{}
-
+$del = "DELETE FROM usuarios WHERE id_usuario=".$_GET["id"];
 
 mysqli_query ($conexion,$del) or die ("no elimino");
 
-
+Class Result{}
 $response = new Result ();
 $response -> resultado = "ok";
 $response -> mensaje = "usuario borrado";

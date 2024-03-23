@@ -5,7 +5,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 require("../conexion.php");
 
 $con = "SELECT * from usuarios ORDER BY nombre";
-$res= mysqli_query($conexion,$con) or die("no_consulto_usuario");
+$res= mysqli_query($conexion,$con) or die("no_consulto_usuarios");
 
 
 
@@ -16,4 +16,6 @@ while ($reg=mysqli_fetch_array($res))
 }
 
 $cad=json_encode($vec);
+echo $cad;
 header("content-type: application/json");
+?>
