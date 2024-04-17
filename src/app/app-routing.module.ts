@@ -6,6 +6,7 @@ import { DashboardComponent } from './modulos/dashboard/dashboard.component';
 import { LoginComponent } from './modulos/login/login.component';
 import { UsuarioComponent } from './modulos/usuarios/usuarios.component';
 import { validaruserGuard } from './guards/validaruser.guard';
+import { ProductoComponent } from './modulos/producto/producto.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'usuarios', component: UsuarioComponent },
-      { path: '', redirectTo: '/usuarios', pathMatch: 'full' },
+      { path: 'productos', component: ProductoComponent },
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
     ],
   },
 

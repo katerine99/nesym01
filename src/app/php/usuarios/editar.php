@@ -11,7 +11,7 @@ require("../conexion.php");
 
 //$editar = "UPDATE  usuarios SET nombre='katherine Melendez', clave='123456', usuario='katherine14@gmail.com',cargo='administradora' WHERE id_usuario=7";
 
-$editar = "UPDATE  usuarios  SET nombre='$params->nombre', clave=SHA1('$params->clave'), usuario='$params->usuario', cargo='$params->cargo' WHERE id_usuario=$params->id_usuario";
+$editar = "UPDATE  usuarios  SET nombre='$params->nombre', clave=SHA1('$params->clave'), usuario='$params->usuario', cargo='$params->cargo' WHERE id_usuario=$params->'id'";
 
 
 mysqli_query($conexion, $editar) or die('no edito');
@@ -25,4 +25,4 @@ $response->mensaje = "datos modificados";
 
 header("content-type: application/json");
 echo json_encode($response);
-?>
+

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { UsuarioService } from 'src/app/servicios/usuarios.service';
 import Swal from 'sweetalert2';
 
 @Component({

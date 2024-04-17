@@ -12,6 +12,7 @@ import { PrincipalComponent } from './modulos/principal.component';
 import { DashboardComponent } from './modulos/dashboard/dashboard.component';
 import { LoginComponent } from './modulos/login/login.component';
 import { UsuarioComponent } from './modulos/usuarios/usuarios.component';
+import { ProductoComponent } from './modulos/producto/producto.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UsuarioComponent } from './modulos/usuarios/usuarios.component';
     DashboardComponent,
     LoginComponent,
     UsuarioComponent,
+    ProductoComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule, HttpClientModule],
   providers: [],

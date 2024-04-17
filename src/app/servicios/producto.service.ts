@@ -13,9 +13,14 @@ export class ProductoService {
 
   }
 
-  insertar(articulo: any) {
+  insertar(datos: any) {
 
-    return this.http.post(`${this.url}insertar.php`, JSON.stringify(articulo));
+    return this.http.post(`${this.url}insertar.php`, JSON.stringify(datos));
+
+
+  }
+  consultar_marca() {
+    return this.http.get(`${this.url}consultar_marca.php`);
 
   }
   eliminar(id: number) {

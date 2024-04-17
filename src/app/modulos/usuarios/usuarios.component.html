@@ -1,5 +1,5 @@
 
-<h1>USER</h1>
+<h1>USUARIOS</h1>
 
 <button class="btn btn-primary" (click)="mostrar(1)">insertar Usuario</button><br><br>
 
@@ -17,7 +17,7 @@
 </div>
 <div class="row">
   <div class="col-lg-6">
-    <input type="email" id="usuario" class="form-control" [(ngModel)]="user.usuario"><br>
+    <input type="usuarios" id="usuario" class="form-control" [(ngModel)]="user.usuario"><br>
     <span style="color: red;" *ngIf="validusuario==false">insertar correo</span>
   </div>
   <div class="col-lg-6">
@@ -47,14 +47,14 @@
   <table class="table table-success table-striped" border="1">
     <tr>
       <th>nombre</th>
-      <th>email</th>
+      <th>usuario</th>
       <th>Cargo</th>
       <th>Acciones</th>
     </tr>
     <!-- mostrar los usuarios -->
     <tr *ngFor="let item of usuario">
       <td>{{item.nombre}}</td>
-      <td>{{item.email}}</td>
+      <td>{{item.usuario}}</td>
       <td>{{item.cargo}}</td>
       <td>
         <a (click)="cargardatos(item, item.id_usuario)">
