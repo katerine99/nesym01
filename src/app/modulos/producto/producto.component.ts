@@ -11,19 +11,18 @@ export class ProductoComponent {
 
   //variables globales
   verf = false;
-  producto: any;
   marca: any;
   idprod: any;
-  product = {
-    nombre: "",
+product = {
+    nombre:"",
     fo_marca: 0,
-
-  };
+};
 
   //para validar
   validnombre = true;
-  validfo_marca = true;
+  validfomarca = true;
   beditar = false;
+
   constructor (private sproducto: ProductoService) {}
 
   ngOnInit(): void {
@@ -54,45 +53,39 @@ export class ProductoComponent {
 
   }
   //validar
-  validar() {
+ validar() {
     if (this.product.nombre == "") {
       this.validnombre = false;
     }else{
       this.validnombre = true;
     }
-if (this.product.fo_marca == 0) {
-      this.validfo_marca = false;
+    if (this.product.fo_marca == 0) {
+      this.validfomarca = false;
     }else{
-      this.validfo_marca = true;
+      this.validfomarca = true;
+    }
 
     }
 
-
+    consulta() {
+      this.sproducto.consultar().subscribe((result: any) => {
+        this.marca = result;
+       // console.log(this.producto);
+      })
   }
-
-consulta() {
-    this.sproducto.consultar().subscribe((result: any) => {
-      this.producto = result;
-      console.log(this.producto);
-    })
-
-
-}
-consulta_marca() {
-  this.sproducto.consultar_marca().subscribe((result: any) => {
-    this.marca = result;
-    console.log(this.producto);
-  })
-
+  
+    consulta_marca() {
+      this.sproducto.consultar_marca().subscribe((result: any) => {
+        this.marca = result;
+       // console.log(this.producto);
+      })
 
 }
 ingresar() {
   //console.log(this.cat);
   this.validar();
-  let ma = Number (this.product.fo_marca);
-  this.product.fo_marca= ma
 
-  if (this.validnombre == true && this.validfo_marca == true ) {
+  if (this.validnombre == true && this.validfomarca == true ) {
 
     this.sproducto.insertar(this.product).subscribe((datos: any) => {
       if (datos['resultado'] == 'OK') {
@@ -104,5 +97,4 @@ ingresar() {
     this.limpiar();
   }
 }
-
 }

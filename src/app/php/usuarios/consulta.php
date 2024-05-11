@@ -18,4 +18,4 @@ while ($reg=mysqli_fetch_array($res))
 $cad=json_encode($vec);
 echo $cad;
 header("content-type: application/json");
-?>
+

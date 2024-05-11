@@ -1,37 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from 'src/app/servicios/usuarios.service';
+import { UsuariosService } from 'src/app/servicios/usuarios.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuarios.component.html',
-  styleUrls: ['./usuarios.component.scss']
+  styleUrls: ['./usuarios.component.scss'],
 })
-export class UsuarioComponent implements OnInit {
-
+export class UsuariosComponent implements OnInit {
   //variables globales
   verf = false;
   usuario: any;
   iduser: any;
   user = {
     nombre: "",
-    clave: "",
     usuario: "",
+    clave: "",
     cargo: ""
   };
 
   //para validar
   validnombre = true;
+  validusuario = true;
   validclave = true;
-  validusuario= true;
   validcargo = true;
   beditar = false;
-  constructor (private suser: UsuarioService) {}
+  constructor(private suser: UsuariosService) {}
 
   ngOnInit(): void {
     this.consulta();
     this.limpiar();
-
   }
   //mostrar formulario
   mostrar(dato: any) {
@@ -46,53 +44,54 @@ export class UsuarioComponent implements OnInit {
         this.verf = true;
         break;
     }
-
   }
   //limpiar
   limpiar() {
     this.user.nombre = "";
-    this.user.clave = "";
     this.user.usuario = "";
-    this.user.cargo = ""
+    this.user.clave = "";
+    this.user.cargo = "";
   }
   //validar
   validar() {
     if (this.user.nombre == "") {
       this.validnombre = false;
-    }else{
+    } else {
       this.validnombre = true;
     }
-if (this.user.clave == "") {
-      this.validclave = false;
-    }else{
-      this.validclave = true;
-}
     if (this.user.usuario == "") {
       this.validusuario = false;
-    }else{
-      this.validusuario= true;
+    } else {
+      this.validusuario = true;
+    }
+
+    if (this.user.clave == "") {
+      this.validclave = false;
+    } else {
+      this.validclave = true;
     }
     if (this.user.cargo == "") {
       this.validcargo = false;
-    }else{
+    } else {
       this.validcargo = true;
     }
-
-
   }
-
 
   consulta() {
     this.suser.consultar().subscribe((result: any) => {
       this.usuario = result;
-     // console.log(this.usuario);
+      // console.log(this.usuario);
     })
-}
+  }
   ingresar() {
     //console.log(this.cat);
     this.validar();
-    if (this.validnombre == true && this.validclave == true && this.validusuario == true && this.validcargo == true) {
-
+    if (
+      this.validnombre == true &&
+      this.validusuario == true &&
+      this.validclave == true &&
+      this.validcargo == true
+    ) {
       this.suser.insertar(this.user).subscribe((datos: any) => {
         if (datos['resultado'] == 'OK') {
           //alert(datos['mensaje']);
@@ -104,34 +103,27 @@ if (this.user.clave == "") {
     }
   }
 
-
-
-
-
   pregunta(id: any, nombre: any) {
-    console.log("entro con el id" + id);
+    console.log('entro con el id' + id);
     Swal.fire({
-      title: "¿ Esta seguro de eliminar el usuario " + nombre + "?",
-      text: "El proceso no podra ser revertido!",
-      icon: "warning",
+      title: '¿ Esta seguro de eliminar el usuario ' + nombre + '?',
+      text: 'El proceso no podra ser revertido!',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Si, Eliminar!"
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
     }).then((result) => {
       if (result.isConfirmed) {
         this.borrarusuario(id);
         Swal.fire({
-          title: "Eliminado!",
-          text: "El usuario ha sido eliminado.",
-          icon: "success"
+          title: 'Eliminado!',
+          text: 'El usuario ha sido eliminado.',
+          icon: 'success',
         });
       }
     });
   }
-
-
-
 
   borrarusuario(id: any) {
     this.suser.eliminar(id).subscribe((datos: any) => {
@@ -139,34 +131,35 @@ if (this.user.clave == "") {
         this.consulta();
       }
     });
- }
+  }
 
-  cargardatos(datos:any, id:number) {
+  cargardatos(datos: any, id: number) {
     //console.log(datos);
     this.user.nombre = datos.nombre;
+    this.user.usuario = datos.usuario;
     this.user.clave = datos.clave;
-    this.user.usuario= datos.usuario
     this.user.cargo = datos.cargo;
     this.iduser = id;
     this.mostrar(1);
-    this.beditar=true;
- }
+    this.beditar = true;
+  }
 
   editar() {
-    //console.log(this.cat);
     this.validar();
 
-    if (this.validnombre == true && this.validclave == true && this.validusuario == true && this.validcargo == true) {
-
+    if (
+      this.validnombre == true &&
+      this.validusuario == true &&
+      this.validclave == true &&
+      this.validcargo == true
+    ) {
       this.suser.editar(this.user, this.iduser).subscribe((datos: any) => {
-        if (datos['resultado'] == 'OK') {
-
+        if (datos['resultado'] == 'ok') {
+          // alerta datos
           this.consulta();
         }
-      })
+      });
       this.mostrar(0);
     }
   }
-
-
 }

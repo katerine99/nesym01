@@ -1,0 +1,61 @@
+<h1>REPORTES</h1>
+
+<button class="btn btn-primary" (click)="mostrar(1)">insertar reporte</button><br><br>
+
+<div id="formulario" *ngIf="verf==true">
+
+<div class="row">
+  <div class="col-lg-6">
+    <input type="text" id="preventivo" class="form-control" [(ngModel)]="report.preventivo"><br>
+    <span style="color: red;" *ngIf="validpreventivo==false">insertar reporte preventivo</span>
+  </div>
+  <div class="col-lg-6">
+    <input type="text" id="correctivo" class="form-control" [(ngModel)]="report.correctivo"><br>
+    <span style="color: red;" *ngIf="validcorrectivo==false">insertar reporte correctivo</span>
+  </div>
+</div>
+  <div class="col-lg-6">
+    <select id="emergente" class="form-control form-select" [(ngModel)]="report.emergente">
+ <option value="reporte emergente" label="emergente">reporte emergente</option>
+      <option value="general" label="general">general</option>
+    </select>
+    <span style="color: red;" *ngIf="validemergente==false">elegir el reporte</span>
+</div>
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-3">
+    <button  *ngIf="beditar==false"  class="btn btn-primary" (click)="ingresar()">guardar</button>
+    <!--<button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">editar</button>-->
+  </div>
+  <div class="col-lg-3">
+    <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+
+<br>
+<div class="table-responsive">
+  <table class="table table-success table-striped" border="1">
+    <tr>
+      <th>preventivo</th>
+      <th>correctivo</th>
+      <th>emergente</th>
+    <!-- mostrar los repuestos -->
+    <tr *ngFor="let item of reporte">
+      <td>{{item.preventivo}}</td>
+      <td>{{item.correctivo}}</td>
+      <td>{{item.emergente}}</td>
+      <td>
+        <a>
+          <span class="fas fa-edit Editar" title="Editar"></span>
+          </a>
+    
+          <a>
+    
+          <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+          </a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    

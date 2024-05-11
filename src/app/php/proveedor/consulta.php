@@ -4,7 +4,7 @@ header ("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, A
 
 require("../conexion.php");
 
-$con = "SELECT * from proveedor ORDER BY  razon_social";
+$con = "SELECT * from proveedor ORDER BY nombre";
 $res=mysqli_query( $conexion,$con) or die ('no consulto proveedor');
 
 $vec= [];
@@ -16,4 +16,4 @@ while ($reg=mysqli_fetch_array($res))
 $cad= json_encode($vec);
 echo $cad;
 header ('content-type: application/json');
-?>
+

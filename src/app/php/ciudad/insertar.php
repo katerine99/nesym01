@@ -8,8 +8,8 @@ $params = json_decode($json);
 
 require ("../conexion.php");
 
- $ins = "INSERT INTO ciudad (nombre) VALUES ('santa marta')";
-//$ins = "INSERT INTO ciudad (nombre) VALUES ('$params ->nombre')";
+ //$ins = "INSERT INTO ciudad (nombre) VALUES ('santa marta')";
+$ins = "INSERT INTO ciudad (nombre, fo_depto) VALUES ('$params ->nombre', $params->dept)";
 
 
 mysqli_query ($conexion,$ins) or die ("no inserto");

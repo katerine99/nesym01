@@ -1,0 +1,63 @@
+<h1>ORDENES DE SERVICIO</h1>
+
+<button class="btn btn-primary" (click)="mostrar(1)">Insertar Orden</button><br><br>
+
+<div id="formulario" *ngIf="verf">
+  <div class="row">
+    <div class="col-lg-6">
+      <input type="text" id="electromecanica" class="form-control" [(ngModel)]="ordens.electromecanica" placeholder="Orden de electromecánica"><br>
+      <span class="text-danger" *ngIf= "validelectromecanica">Insertar orden de electromecánica</span>
+    </div>
+    <div class="col-lg-6">
+      <input type="text" id="metalmecanica" class="form-control" [(ngModel)]="ordens.metalmecanica" placeholder="Orden de metalmecánica"><br>
+      <span class="text-danger" *ngIf="validmetalmecanica">Insertar orden de metalmecánica</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <span class="text-danger" *ngIf="validasistenciatecnica">Asistencia técnica</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+      <button *ngIf="!beditar" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+      <button *ngIf="beditar" class="btn btn-primary" (click)="editar()">Editar</button>
+    </div>
+    <div class="col-lg-3">
+      <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>
+
+<br>
+
+<div class="table-responsive">
+  <table class="table table-success table-striped" border="1">
+    <thead>
+      <tr>
+        <th>Electromecánica</th>
+        <th>Metalmecánica</th>
+        <th>Asistencia Técnica</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- mostrar los repuestos -->
+      <tr *ngFor="let item of ordenesdeservicio">
+        <td>{{item.electromecanica}}</td>
+        <td>{{item.metalmecanica}}</td>
+        <td>{{item.asistenciatecnica}}</td>
+        <td>
+          <button class="btn btn-primary" title="Editar" (click)="editar()">
+            <span class="fas fa-edit"></span>
+          </button>
+          <button class="btn btn-danger" title="Eliminar" (click)="eliminar(item.id)">
+            <span class="fas fa-trash-alt"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

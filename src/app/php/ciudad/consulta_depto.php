@@ -4,8 +4,8 @@ header ("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, A
 
 require("../conexion.php");
 
-$con = "SELECT * from intervencion_de_urgencia ORDER BY  area";
-$res=mysqli_query( $conexion,$con) or die ('no consulto intervencion');
+$con = "SELECT * FROM departamento ORDER BY nombre";
+$res=mysqli_query( $conexion,$con) or die ('no consulto depto');
 
 $vec= [];
 while ($reg=mysqli_fetch_array($res))

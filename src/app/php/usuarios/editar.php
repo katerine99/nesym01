@@ -11,7 +11,9 @@ require("../conexion.php");
 
 //$editar = "UPDATE  usuarios SET nombre='katherine Melendez', clave='123456', usuario='katherine14@gmail.com',cargo='administradora' WHERE id_usuario=7";
 
-$editar = "UPDATE  usuarios  SET nombre='$params->nombre', clave=SHA1('$params->clave'), usuario='$params->usuario', cargo='$params->cargo' WHERE id_usuario=$params->'id'";
+$id= $_GET['id'];
+
+$editar = "UPDATE  usuarios  SET nombre='$params->nombre',  usuario='$params->usuario',clave=SHA1('$params->clave'), cargo='$params->cargo' WHERE id_usuario='$id'";
 
 
 mysqli_query($conexion, $editar) or die('no edito');

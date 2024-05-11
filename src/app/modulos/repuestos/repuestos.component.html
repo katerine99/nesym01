@@ -1,0 +1,55 @@
+<h1>REPUESTOS</h1>
+
+<button class="btn btn-primary" (click)="mostrar(1)">Insertar repuestos</button><br><br>
+
+<div id="formulario" *ngIf="verf==true">
+  <div class="row">
+    <div class="col-lg-2">
+      <input type="text" id="cantidad" class="form-control" [(ngModel)]="repuest.cantidad"><br>
+      <span style="color: red;" *ngIf="validcantidad==false">Insertar cantidad</span>
+    </div>
+    <div class="col-lg-2">
+      <input type="text" id="total" class="form-control" [(ngModel)]="repuest.total"><br>
+      <span style="color: red;" *ngIf="validtotal==false">Insertar el total</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+      <button *ngIf="!beditar" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+      <button *ngIf="beditar" class="btn btn-primary" (click)="editar()">editar</button>
+    </div>
+    <div class="col-lg-3">
+      <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
+    </div>
+    <div class="col-lg-3"></div>
+  </div>
+</div>
+
+<br>
+<div class="table-responsive">
+  <table class="table table-success table-striped" border="1">
+    <thead>
+      <tr>
+        <th>cantidad</th>
+        <th>total</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Mostrar los repuestos -->
+      <tr *ngFor="let item of repuestos">
+        <td>{{item.cantidad}}</td>
+        <td>{{item.total}}</td>
+        <td>
+          <a>
+            <span class="fas fa-edit Editar" title="Editar"></span>
+          </a>
+          <a>
+            <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

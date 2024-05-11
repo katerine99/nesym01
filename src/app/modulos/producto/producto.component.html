@@ -14,16 +14,16 @@
     <option value="0" label='seleccionar marca'>seleccionar marca</option>
     <option *ngFor="let item1 of marca" value="{{item1.id_marca}}" label="{{item1.nombre}}">{{item1.nombre}}</option>
     </select>
-    <span style="color: red;" *ngIf="validfo_marca==false">seleccionar marca</span>
+    <span style="color: red;" *ngIf="validfomarca==false">seleccionar marca</span>
   </div>
 
-  <div class="col-lg-3">
-    <button  *ngIf="beditar==false"  class="btn btn-primary" (click)="ingresar ()">guardar</button>
+  div class="col-lg-3">
+    <!--<button  *ngIf="beditar==false"  class="btn btn-primary" (click)="ingresar ()">guardar</button>
     <!--<button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">guardar</button>-->
   </div>
   <div class="col-lg-3">
     <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
-  </div>
+  </div><
   <div class="col-lg-3"></div>
 
 
@@ -32,13 +32,13 @@
   <table class="table table-success table-striped" border="1">
     <tr>
       <th>nombre</th>
-      <th>fo_marca</th>
+      <th>nmarca</th>
       <th>Acciones</th>
     </tr>
-    <!-- mostrar los usuarios -->
-    <tr *ngFor="let item of producto">
+    <!-- mostrar los productos -->
+    <tr *ngFor="let item of marca">
       <td>{{item.nombre}}</td>
-      <td>{{item.fo_marca}}</td>
+      <td>{{item.nmarca}}</td>
       <td>
         <a>
       <span class="fas fa-edit Editar" title="Editar"></span>

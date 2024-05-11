@@ -25,7 +25,7 @@ export class RepuestosService {
 
   }
 
-  edit(datos: any) {
+  editar(datos: any) {
 
     return this.http.post(`${this.url}editar.php`, JSON.stringify(datos));
   }

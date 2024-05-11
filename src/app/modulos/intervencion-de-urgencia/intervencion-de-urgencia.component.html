@@ -1,0 +1,57 @@
+<hr>
+<h1>INTERVENCION DE URGENCIA</h1>
+
+<button class="btn btn-primary" (click)="mostrar(1)">Insertar Área</button><br><br>
+
+<div id="formulario" *ngIf="verf">
+  <div class="row">
+    <div class="col-lg-6">
+      <input type="text" id="interurg" class="form-control" [(ngModel)]="interurg.area" placeholder="Área de intervención"><br>
+      <span style="color: red;" *ngIf="validarea">Insertar área</span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-3">
+    <button *ngIf="beditar" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+    <button *ngIf="beditar" class="btn btn-primary" (click)="editar()">Editar</button>
+  </div>
+  <div class="col-lg-3">
+    <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
+  </div>
+</div>
+
+<br>
+
+<div class="table-responsive">
+  <table class="table table-success table-striped" border="1">
+    <thead>
+      <tr>
+        <th>Área</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Mostrar las áreas -->
+      <tr *ngFor="let item of intervencion_de_urgencia">
+        <td>{{item.area}}</td>
+        <td>
+          <a (click)="cargardatos(item, item.id_intervencion_de_urgencia)">
+            <span class=" fas fa-edit editar " title="Editar"></span>
+
+        </a>
+
+        -
+
+        <a (click)="pregunta(item.id_intervencion_de_urgencia, item.area)">
+
+            <span class=" fas fa-trash-alt eliminar" title="Eliminar"></span>
+        </a>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

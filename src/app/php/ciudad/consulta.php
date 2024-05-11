@@ -4,7 +4,9 @@ header ("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, A
 
 require("../conexion.php");
 
-$con = "SELECT * from ciudad ORDER BY  nombre";
+$con = "SELECT c.*, d.nombre AS ndepto FROM ciudad c
+INNER JOIN departamento d  ON c.fo_depto = d.id_depto
+ORDER BY c.nombre";
 $res=mysqli_query( $conexion,$con) or die ('no consulto ciudad');
 
 $vec= [];

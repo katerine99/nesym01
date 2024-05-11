@@ -1,0 +1,59 @@
+
+<h1>CIUDAD</h1>
+
+
+<button class="btn btn-primary" (click)="mostrar(1)">Insertar Ciudad</button><br><br>
+
+<div id="formulario" *ngIf="verf == true">
+  <div class="row">
+    <div class="col-lg-2">
+      <input type="text" id="nombre" class="form-control" [(ngModel)]="ciud.nombre" placeholder="Nombre de la Ciudad"><br>
+      <span style="color: red;" *ngIf="validnombre == false">Insertar Nombre</span>
+    </div>
+
+    <div class="col-lg-2">
+      <select id="fo_depto" class="form-control form-select" [(ngModel)]="ciud.fo_depto">
+        <option value="0" label="Seleccionar Departamento">Seleccionar Departamento</option>
+        <option *ngFor="let item1 of depto" [value]="item1.id_depto" label="{{item1.nombre}}">{{item1.nombre}}</option>
+      </select>
+      <span style="color: red;" *ngIf="validfodepto == false">Seleccionar Departamento</span>
+    </div>
+
+    <div class="col-lg-3">
+      <button *ngIf="beditar == false" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+      <button *ngIf="beditar == true" class="btn btn-primary" (click)="editar()">Guardar</button>
+    </div>
+
+    <div class="col-lg-3">
+      <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
+    </div>
+
+    <div class="col-lg-2"></div>
+  </div>
+
+  <br>
+
+  <div class="table-responsive">
+    <table class="table table-success table-striped" border="1">
+      <tr>
+        <th>Nombre</th>
+        <th>Departamento</th>
+        <th>Acciones</th>
+      </tr>
+      <!-- Mostrar los productos -->
+      <tr *ngFor="let item of depto">
+        <td>{{item.nombre}}</td>
+        <td>{{item.ndepto}}</td>
+        <td>
+          <a>
+            <span class="fas fa-edit Editar" title="Editar"></span>
+          </a>
+
+          <a (click)="pregunta(item.id_usuario, item.nombre)">
+            <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+          </a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

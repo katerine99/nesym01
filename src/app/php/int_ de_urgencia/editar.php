@@ -6,9 +6,11 @@ $json = file_get_contents ("php://input");
 
 $params = json_decode($json);
 
+
 require ("../conexion.php");
 
- $editar = "UPDATE  intervencion_de_urgencia SET area='MOROR DE 100 HP' WHERE id_intervencion_de_urgencia=12";
+
+ $editar = "UPDATE  intervencion_de_urgencia SET area='$params->area'";
 
 
  mysqli_query($conexion, $editar) or die('no edito');
@@ -22,4 +24,4 @@ $response -> mensaje = 'datos modificados';
 
 header ('content-type: application/json');
 echo json_encode ($response);
-?>
+

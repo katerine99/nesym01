@@ -23,4 +23,4 @@ $response -> mensaje = "datos_grabados";
 
 header("content-type: application/json");
 echo json_encode($response);
-?>
+

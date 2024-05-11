@@ -12,6 +12,9 @@ export class CiudadService {
     return this.http.get(`${this.url}consulta.php`);
 
   }
+  consultar_depto() {
+    return this.http.get(`${this.url}consultar_depto.php`);
+}
 
   insertar(articulo: any) {
 

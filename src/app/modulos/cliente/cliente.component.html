@@ -1,0 +1,55 @@
+<h1>CLIENTES</h1>
+
+<button class="btn btn-primary" (click)="mostrar(1)">insertar cliente</button><br><br>
+
+<div id="formulario" *ngIf="verf==true">
+
+<div class="row">
+  <div class="col-lg-6">
+    <input type="text" id="nombre" class="form-control" [(ngModel)]="client.nombre"><br>
+    <span style="color: red;" *ngIf="validnombre==false">insertar nombre</span>
+  </div>
+  <div class="col-lg-6">
+    <input type="text" id="celular" class="form-control" [(ngModel)]="client.celular"><br>
+    <span style="color: red;" *ngIf="validcelular==false">insertar celular</span>
+  </div>
+ <option value="cliente" label="cliente">cliente</option>
+      <option value="general" label="general">general</option>
+    <span style="color: red;" *ngIf="validcelular==false">elegir el cliente</span>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-3">
+    <button  *ngIf="beditar==false"  class="btn btn-primary" (click)="ingresar()">guardar</button>
+  </div>
+  <div class="col-lg-3">
+    <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
+  </div>
+  <div class="col-lg-3"></div>
+</div>
+
+<br>
+<div class="table-responsive">
+  <table class="table table-success table-striped" border="1">
+    <tr>
+      <th>nombre</th>
+      <th>celular</th>
+      <th>Acciones</th>
+    </tr>
+    <!-- mostrar los usuarios -->
+    <tr *ngFor="let item of cliente">
+      <td>{{item.nombre}}</td>
+      <td>{{item.celular}}</td>
+      <td>
+       <!--> <a (click)="cargardatos(item, item.id_cliente)">
+      <span class="fas fa-edit Editar" title="Editar"></span>
+      </a>-->
+
+      <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+      
+      </td>
+    </tr>
+  </table>
+</div>

@@ -4,9 +4,9 @@ header ("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, A
 
 require("../conexion.php");
 
-$con = "SELECT * FROM producto p
-        INNER JOIN marca m ON p.fo_marca = m.id_marca
-        ORDER BY p.nombre";
+$con = "SELECT p. *, m.nombre AS nmarca FROM producto p 
+INNER JOIN marca m ON p.fo_marca = m.id_marca
+ORDER BY p.nombre"; 
 
 $res=mysqli_query( $conexion,$con) or die ('no consulto productos');
 
