@@ -8,10 +8,11 @@ $params = json_decode($json);
 
 require ("../conexion.php");
 
- $editar = "UPDATE  ordenes_de_servicio SET ELECTROMECANICA='arranque de pozos de produccion de PETROLEO', METALMECANICA='automatizacion de procesos', ASISTENCIA_TECNICA ='asistencia especializada en RADIADORES' WHERE id_ordenes_de_servicio=3";
+//$editar = "UPDATE  ordenes_de_servicio SET ELECTROMECANICA='arranque de pozos de produccion de PETROLEO', METALMECANICA='automatizacion de procesos', ASISTENCIA_TECNICA ='asistencia especializada en RADIADORES' WHERE id_ordenes_de_servicio=3";
 
-
- mysqli_query($conexion, $editar) or die('no edito');
+mysqli_query($conexion, $editar) or die('no edito');
+$editar = "UPDATE ordenes de servicio  SET electromecanica='$params->electromecanica',  metalmecanica='$params->metalmecanica' , asistenciatecnica ='$params->asistenciatecnica' WHERE id_ordnes_de_servicio='$id'";
+;
 
 Class Result{}
 

@@ -1,70 +1,94 @@
+
+
 <h1>COMPRAS</h1>
 
-<button class="btn btn-primary" (click)="mostrar(1)">insertar compra</button><br><br>
+<button class="btn btn-primary" (click)="mostrar(1)">Insertar compra</button><br><br>
 
-<div id="formulario" *ngIf="verf==true">
-
-<div class="row">
-  <div class="col-lg-6">
-    <input type="text" id="cantidad" class="form-control"=><br>
-    <span style="color: red;" *ngIf="validcantidad==false">insertar cantidad</span>
+<div id="formulario" *ngIf="verf">
+  <div class="row">
+    <div class="col-lg-6">
+      <input type="text" id="cantidad" class="form-control" [(ngModel)]="comp.cantidad" placeholder="Cantidad">
+      <br>
+      <span [ngClass]="{'error-message': !comp.cantidad}">Insertar cantidad</span>
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-lg-6">
-    <input type="total" id="total" class="form-control"="comp.total"><br>
-    <span style="color: red;" *ngIf="validtotal==false">insertar total</span>
+  <div class="row">
+    <div class="col-lg-6">
+      <input type="text" id="total" class="form-control" [(ngModel)]="comp.total" placeholder="Total">
+      <br>
+      <span [ngClass]="{'error-message': !comp.total}">Insertar total</span>
+    </div>
+    <div class="col-lg-6">
+      <select id="fo_producto" class="form-control form-select" [(ngModel)]="comp.fo_producto">
+        <option value="0">Seleccionar producto</option>
+        <option *ngFor="let item1 of productos" [value]="item1.id_producto">{{item1.nombre}}</option>
+      </select>
+      <br>
+      <span [ngClass]="{'error-message': !comp.fo_producto}"></span>
+    </div>
   </div>
-  <div class="col-lg-6">
-    <select id="fo_producto" class="form-control form-select" ="comp.fo_producto">
-      <select id="fo_usuarios" class="form-control form-select"="comp.fo_usuarios">
-        <select id="fo_proveedor" class="form-control form-select" ="comp.fo_proveedor">
-      
- <<option value="0" label='seleccionar marca'>seleccionar producto</option>
- <option *ngFor="let item1 of compras" value="{{item1.id_compras}}" label="{{item1.nombre}}">{{item1.nombre}}</option>
-    </select><br>
-  </select>
-</select>
-
-    <span style="color: red;" *ngIf="validfoproducto==false">elegir el producto</span>
+  <div class="row">
+    <div class="col-lg-6">
+      <select id="fo_usuarios" class="form-control form-select" [(ngModel)]="comp.fo_usuarios">
+        <option value="0">Seleccionar usuario</option>
+        <option *ngFor="let usuario of usuarios" [value]="usuario.id_usuario">{{usuario.nombre}}</option>
+      </select>
+      <br>
+      <span [ngClass]="{'error-message': !comp.fo_usuarios}"></span>
+    </div>
+    <div class="col-lg-6">
+      <select id="fo_proveedor" class="form-control form-select" [(ngModel)]="comp.fo_proveedor">
+        <option value="0">Seleccionar proveedor</option>
+        <option *ngFor="let proveedor of proveedores" [value]="proveedor.id_proveedor">{{proveedor.nombre}}</option>
+      </select>
+      <br>
+      <span [ngClass]="{'error-message': !comp.fo_proveedor}"></span>
+    </div>
   </div>
-
-</div>
-<div class="row">
-  <div class="col-lg-3"></div>
-  <div class="col-lg-3">
-    <button  *ngIf="beditar==false"  class="btn btn-primary" (click)="ingresar()">guardar</button>
-    <!--<button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">editar</button>-->
+  <div class="row">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3">
+      <button *ngIf="" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+      <button *ngIf="" class="btn btn-primary" (click)="editar()">Editar</button>
+    </div>
+    <div class="col-lg-3">
+      <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
+    </div>
+    <div class="col-lg-3"></div>
   </div>
-  <div class="col-lg-3">
-    <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
-  </div>
-  <div class="col-lg-3"></div>
-</div>
 </div>
 
 <br>
+
 <div class="table-responsive">
   <table class="table table-success table-striped" border="1">
-    <tr>
-      <th>cantidad</th>
-      <th>total</th>
-      <th>producto</th>
-      <th>usuarios</th>
-      <th>proveedor</th>
-      <th>Acciones</th>
-    </tr>
-    <!-- mostrar los usuarios -->
-    <tr *ngFor="let item of compras">
-      <td>{{item.cantidad}}</td>
-      <td>{{item.total}}</td>
-      <td>{{item.nproducto}}</td>
-      <td>{{item.nusuarios}}</td>
-      <td>{{item.nproveedor}}</td>
-      <td>
-
-      <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
-      </td>
-    </tr>
+    <thead>
+      <tr>
+        <th>Cantidad</th>
+        <th>Total</th>
+        <th>Producto</th>
+        <th>Usuarios</th>
+        <th>Proveedor</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Mostrar las compras -->
+      <tr *ngFor="let item of compras">
+        <td>{{item.cantidad}}</td>
+        <td>{{item.total}}</td>
+        <td>{{item.nproducto}}</td>
+        <td>{{item.nusuarios}}</td>
+        <td>{{item.nproveedor}}</td>
+        <td>
+          <a (click)="cargardatos(item, item.id_compras)">
+            <span class="fas fa-edit Editar" title="Editar"></span>
+          </a>
+          <a (click)="pregunta(item.id_compras, item.cantidad)">
+            <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+          </a>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </div>

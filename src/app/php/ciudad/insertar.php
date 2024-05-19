@@ -1,26 +1,24 @@
 <?php
-header("Access-Control-Allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
-$json = file_get_contents ("php://input");
-
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+require("../conexion.php");
 
- //$ins = "INSERT INTO ciudad (nombre) VALUES ('santa marta')";
-$ins = "INSERT INTO ciudad (nombre, fo_depto) VALUES ('$params ->nombre', $params->dept)";
+$nombre = $params->nombre;
+$fo_depto = $params->fo_depto;
 
+$ins = "INSERT INTO ciudad (nombre, fo_depto) VALUES ('$nombre', $fo_depto)";
 
-mysqli_query ($conexion,$ins) or die ("no inserto");
+mysqli_query($conexion, $ins) or die("no inserto");
 
-Class Result{}
+class Result {}
+$response = new Result();
+$response->resultado = "OK";
+$response->mensaje = "Datos grabados";
 
-$response = new Result ();
-$response -> resultado = "ok";
-$response -> mensaje = "datos_grabados";
-
-
-header("content-type: application/json");
 echo json_encode($response);
-?>
+

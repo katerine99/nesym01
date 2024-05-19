@@ -1,14 +1,26 @@
-input , select, button{
+input,
+select,
+button {
     margin-top: 10px;
     border-width: 1px;
     border-style: solid;
     border-color: gray;
-  }
-  .Editar {
-    color: blue;
+    color: #55a555; /* Color de las letras */
+    background-color: white; /* Fondo transparente para que no se resalte la información */
+}
+
+button {
     cursor: pointer;
-  }
-  .Eliminar {
-    color: red;
+    background-color: #63b363; /* Color de fondo de los botones */
+    color: white; /* Color de las letras de los botones */
+}
+
+.Editar {
+    color: hsla(240, 83%, 49%, 0.855);
     cursor: pointer;
-  }
+}
+
+.Eliminar {
+    color: hsl(0, 74%, 54%);
+    cursor: pointer;
+}

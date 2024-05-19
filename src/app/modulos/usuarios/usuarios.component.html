@@ -1,66 +1,74 @@
-<h1>USUARIOS</h1>
-
-<button class="btn btn-primary" (click)="mostrar(1)">insertar Usuario</button><br>
-<div id="formulario" *ngIf="verf==true">
-  <div class="row">
-    <div class="col-lg-6">
-      <input type="text" id="nombre" class="form-control" [(ngModel)]="user.nombre"><br>
-      <span style="color: red;" *ngIf="validnombre==false">insertar nombre</span>
+<div class="container">
+  <h1>USUARIOS</h1>
+  <button class="btn btn-primary" (click)="mostrar(1)">Insertar Usuario</button><br>
+  <div id="formulario" *ngIf="verf">
+    <div class="row">
+      <div class="col-lg-6">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" class="form-control" [(ngModel)]="user.nombre"><br>
+        <span style="color: red;" *ngIf="validnombre==false">Insertar nombre</span>
+      </div>
+      <div class="col-lg-6">
+        <label for="usuario">Usuario:</label>
+        <input type="text" id="usuario" class="form-control" [(ngModel)]="user.usuario"><br>
+        <span style="color: red;" *ngIf="validusuario==false">Insertar usuario</span>
+      </div>
     </div>
-    <div class="col-lg-6">
-      <input type="text" id="usuario" class="form-control" [(ngModel)]="user.usuario"><br>
-      <span style="color: red;" *ngIf="validusuario==false">insertar usuario</span>
+    <div class="row">
+      <div class="col-lg-6">
+        <label for="clave">Clave:</label>
+        <input type="password" id="clave" class="form-control" [(ngModel)]="user.clave"><br>
+        <span style="color: red;" *ngIf="validclave==false">Insertar clave</span>
+      </div>
+      <div class="col-lg-6">
+        <label for="cargo">Cargo:</label>
+        <select id="cargo" class="form-control form-select" [(ngModel)]="user.cargo">
+          <option value="administrador" label="administrador">Administrador</option>
+          <option value="general" label="general">General</option>
+        </select><br>
+        <span style="color: red;" *ngIf="validcargo==false">Elegir el cargo</span>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-6">
-      <input type="password" id="clave" class="form-control" [(ngModel)]="user.clave"><br>
-      <span style="color: red;" *ngIf="validclave==false">insertar clave</span>
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-3">
+        <button *ngIf="beditar==false" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+        <button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">Editar</button>
+      </div>
+      <div class="col-lg-3">
+        <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
+      </div>
+      <div class="col-lg-3"></div>
     </div>
-    <div class="col-lg-6">
-      <select id="cargo" class="form-control form-select" [(ngModel)]="user.cargo">
-        <option value="administrador" label="administrador">administraor</option>
-        <option value="general" label="general">general</option>
-      </select><br>
-      <span style="color: red;" *ngIf="validcargo==false">elegir el cargo</span>
+    <br>
+    <hr>
+    <div class="table-responsive">
+      <table class="table table-success table-striped" border="1">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Usuario</th>
+            <th>Cargo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Mostrar los usuarios -->
+          <tr *ngFor="let item of usuario">
+            <td>{{item.nombre}}</td>
+            <td>{{item.usuario}}</td>
+            <td>{{item.cargo}}</td>
+            <td>
+              <a (click)="cargardatos(item, item.id_usuario)">
+                <span class="fas fa-edit Editar" title="Editar"></span>
+              </a>
+              <a (click)="pregunta(item.id_usuario, item.nombre)">
+                <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-  </div>
-  <div class="row">
-    <div class="col-lg-3"></div>
-    <div class="col-lg-3">
-      <button *ngIf="beditar==false" class="btn btn-primary" (click)="ingresar()">guardar</button>
-    </div>
-    <button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">editar</button>
-    <div class="col-lg-3">
-      <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
-    </div>
-    <div class="col-lg-3"></div>
-  </div><br>
-  <hr>
-  <div class="table-responsive">
-    <table class="table table-success table-striped" border="1">
-      <tr>
-        <th>nombre</th>
-        <th>usuario</th>
-        <th>Cargo</th>
-        <th>Acciones</th>
-      </tr>
-      <!-- mostrar los usuarios -->
-      <tr *ngFor="let item of usuario">
-        <td>{{item.nombre}}</td>
-        <td>{{item.usuario}}</td>
-        <td>{{item.cargo}}</td>
-        <td>
-          <a (click)="cargardatos(item, item.id_usuario)">
-            <span class="fas fa-edit Editar" title="Editar"></span>
-          </a>
-
-          <a (click)="pregunta(item.id_usuario, item.nombre)">
-            <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
-          </a>
-        </td>
-      </tr>
-    </table>
   </div>
 </div>

@@ -79,6 +79,35 @@ export class OrdenesDeServicioComponent {
       this.limpiar();
     }
   }
+  pregunta(id: any, nombre: any) {
+    console.log('entro con el id' + id);
+    Swal.fire({
+      title: '¿ Esta seguro de eliminar la orden ' + nombre + '?',
+      text: 'El proceso no podra ser revertido!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Eliminar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.borrarorden(id);
+        Swal.fire({
+          title: 'Eliminado!',
+          text: 'la orden ha sido eliminada.',
+          icon: 'success',
+        });
+      }
+    });
+  }
+
+  borrarorden(id: any) {
+    this.sordenesdeservicio.eliminar(id).subscribe((datos: any) => {
+      if (datos['resultado'] == 'OK') {
+        this.consulta();
+      }
+    });
+  }
 
   editar() {
     this.validar();
@@ -92,25 +121,25 @@ export class OrdenesDeServicioComponent {
       this.mostrar(0);
     }
   }
-
-  eliminar(item: any) {
-    Swal.fire({
-      title: '¿Estás seguro?',
-      text: "¡No podrás revertir esto!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, eliminarlo!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.sordenesdeservicio.eliminar(item.id).subscribe((datos: any) => {
-          if (datos['resultado'] === 'OK') {
-            Swal.fire('¡Eliminado!', datos['mensaje'], 'success');
-            this.consulta();
-          }
-        });
-      }
-    });
+cargardatos(datos: any, id: number) {
+    //console.log(datos);
+    this.ordens.electromecanica = datos.electromecanica;
+    this.ordens.metalmecanica = datos.metalmecanica;
+    this.ordens.asistenciatecnica = datos.asistenciatecnica;
+    
+    this.idord = id;
+    this.mostrar(1);
+    this.beditar = true;
   }
-}
+  eliminar() {
+    if (confirm("¿Estás seguro de eliminar la orden?")) {
+      this.sordenesdeservicio.eliminar(this.idord).subscribe((datos: any) => {
+        if (datos['resultado'] == 'OK') {
+          this.consulta();
+          Swal.fire('¡Eliminado!', 'la orden ha sido eliminada.', 'success');
+          this.mostrar(0);
+        }
+      });
+    }
+  }
+  }

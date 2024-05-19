@@ -8,8 +8,8 @@ $params = json_decode($json);
 
 require ("../conexion.php");
 
- $ins = "INSERT INTO marca (nombre) VALUES ('diesel')";
-//$ins = "INSERT INTO  marca (nombre) VALUES ('$params ->nombre)";
+ //$ins = "INSERT INTO marca (nombre) VALUES ('diesel')";
+$ins = "INSERT INTO  marca (nombre) VALUES ('$params ->nombre)";
 
 
 mysqli_query ($conexion,$ins) or die ("no inserto");
@@ -23,4 +23,4 @@ $response -> mensaje = "datos_grabados";
 
 header("content-type: application/json");
 echo json_encode($response);
-?>
+

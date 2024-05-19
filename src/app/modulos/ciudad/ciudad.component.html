@@ -1,27 +1,28 @@
 
 <h1>CIUDAD</h1>
 
-
 <button class="btn btn-primary" (click)="mostrar(1)">Insertar Ciudad</button><br><br>
 
-<div id="formulario" *ngIf="verf == true">
+<div id="formulario" *ngIf="verf">
   <div class="row">
     <div class="col-lg-2">
-      <input type="text" id="nombre" class="form-control" [(ngModel)]="ciud.nombre" placeholder="Nombre de la Ciudad"><br>
-      <span style="color: red;" *ngIf="validnombre == false">Insertar Nombre</span>
+      <input type="text" id="nombre" class="form-control" [(ngModel)]="ciud.nombre" placeholder="Nombre de la Ciudad" [ngClass]="{'error': !ciud.nombre && validnombre}">
+      <br>
+      <span *ngIf="!ciud.nombre && validnombre" class="error"></span>
     </div>
 
     <div class="col-lg-2">
-      <select id="fo_depto" class="form-control form-select" [(ngModel)]="ciud.fo_depto">
-        <option value="0" label="Seleccionar Departamento">Seleccionar Departamento</option>
-        <option *ngFor="let item1 of depto" [value]="item1.id_depto" label="{{item1.nombre}}">{{item1.nombre}}</option>
+      <select id="fo_depto" class="form-control form-select" [(ngModel)]="ciud.fo_depto" [ngClass]="{'error': ciud.fo_depto == 0 && validfodepto}">
+        <option value="0">Seleccionar Departamento</option>
+        <option *ngFor="let item1 of deptos" [value]="item1.id_depto">{{item1.nombre}}</option>
       </select>
-      <span style="color: red;" *ngIf="validfodepto == false">Seleccionar Departamento</span>
+      <br>
+      <span *ngIf="ciud.fo_depto == 0 && validfodepto" class="error"></span>
     </div>
 
     <div class="col-lg-3">
-      <button *ngIf="beditar == false" class="btn btn-primary" (click)="ingresar()">Guardar</button>
-      <button *ngIf="beditar == true" class="btn btn-primary" (click)="editar()">Guardar</button>
+      <button *ngIf="beditar ==false" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+      <button *ngIf="beditar ==true" class="btn btn-primary" (click)="editar()">guardar</button>
     </div>
 
     <div class="col-lg-3">
@@ -40,16 +41,15 @@
         <th>Departamento</th>
         <th>Acciones</th>
       </tr>
-      <!-- Mostrar los productos -->
-      <tr *ngFor="let item of depto">
+      <!-- Mostrar las ciudades -->
+      <tr *ngFor="let item of ciudades">
         <td>{{item.nombre}}</td>
         <td>{{item.ndepto}}</td>
         <td>
-          <a>
+          <a (click)="cargardatos(item, item.id_ciudad)">
             <span class="fas fa-edit Editar" title="Editar"></span>
           </a>
-
-          <a (click)="pregunta(item.id_usuario, item.nombre)">
+          <a (click)="pregunta(item.id_ciudad, item.nombre)">
             <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
           </a>
         </td>

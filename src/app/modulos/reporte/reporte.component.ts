@@ -95,5 +95,62 @@ ingresar() {
     this.limpiar();
   }
 }
+pregunta(id: any, nombre: any) {
+  console.log('entro con el id' + id);
+  Swal.fire({
+    title: '¿ Esta seguro de eliminar el reporte ' + nombre + '?',
+    text: 'El proceso no podra ser revertido!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, Eliminar!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.borrarreporte(id);
+      Swal.fire({
+        title: 'Eliminado!',
+        text: 'El reporte ha sido eliminado.',
+        icon: 'success',
+      });
+    }
+  });
+}
 
+borrarreporte(id: any) {
+  this.sreporte.eliminar(id).subscribe((datos: any) => {
+    if (datos['resultado'] == 'OK') {
+      this.consulta();
+    }
+  });
+}
+
+cargardatos(datos: any, id: number) {
+  //console.log(datos);
+  this.report.preventivo = datos.preventivo;
+  this.report.correctivo = datos.correctivo;
+  this.report.emergente = datos.emergente;
+  this.idrepor = id;
+  this.mostrar(1);
+  this.beditar = true;
+}
+
+editar() {
+  this.validar();
+
+  if (
+    this.validpreventivo== true &&
+    this.validcorrectivo == true &&
+    this.validemergente == true 
+    
+  ) {
+    this.sreporte.edit(this.report).subscribe((datos: any) => {
+      if (datos['resultado'] == 'ok') {
+        // alerta datos
+        this.consulta();
+      }
+    });
+    this.mostrar(0);
+  }
+}
 }

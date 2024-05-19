@@ -8,8 +8,9 @@ $params = json_decode($json);
 
 require ("../conexion.php");
 
- $editar = "UPDATE  marca SET nombre='STANLY1' WHERE id_marca=11";
+ //$editar = "UPDATE  marca SET nombre='STANLY1' WHERE id_marca=11";
 
+ $editar = "UPDATE marca SET nombre='$nombre', WHERE id_marca='$id'";
 
  mysqli_query($conexion, $editar) or die('no edito');
 
@@ -22,4 +23,3 @@ $response -> mensaje = 'datos modificados';
 
 header ('content-type: application/json');
 echo json_encode ($response);
-?>

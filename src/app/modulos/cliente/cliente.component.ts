@@ -88,7 +88,76 @@ ingresar() {
     this.limpiar();
   }
 }
+pregunta(id: any, nombre: any) {
+  console.log('entro con el id' + id);
+  Swal.fire({
+    title: '¿ Esta seguro de eliminar el cliente' + nombre + '?',
+    text: 'El proceso no podra ser revertido!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, Eliminar!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.borrarcliente(id);
+      Swal.fire({
+        title: 'Eliminado!',
+        text: 'El usuario ha sido eliminado.',
+        icon: 'success',
+      });
+    }
+  });
 }
+
+borrarcliente(id: any) {
+  this.scliente.eliminar(id).subscribe((datos: any) => {
+    if (datos['resultado'] == 'OK') {
+      this.consulta();
+    }
+  });
+}
+
+cargardatos(datos: any, id: number) {
+  //console.log(datos);
+  this.client.nombre = datos.nombre;
+  this.client.celular = datos.celular;
+  this.idclie = id;
+  this.mostrar(1);
+  this.beditar = true;
+}
+
+editar() {
+  this.validar();
+
+  if (
+    this.validnombre == true &&
+    this.validcelular== true
+    
+  ) {
+    this.scliente.edit(this.client).subscribe((datos: any) => {
+      if (datos['resultado'] == 'ok') {
+        // alerta datos
+        this.consulta();
+      }
+    });
+    this.mostrar(0);
+  }
+}
+eliminar() {
+  if (confirm("¿Estás seguro de eliminar el cliente?")) {
+    this.scliente.eliminar(this.idclie).subscribe((datos: any) => {
+      if (datos['resultado'] == 'OK') {
+        this.consulta();
+        Swal.fire('¡Eliminado!', 'el cliente ha sido eliminado.', 'success');
+        this.mostrar(0);
+      }
+    });
+  }
+}
+
+}
+
 
 
 

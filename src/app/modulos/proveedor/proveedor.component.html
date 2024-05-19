@@ -1,65 +1,68 @@
-<h1>PROVEEDOR</h1>
+<div class="container">
+  <h1>PROVEEDOR</h1>
+  <button class="btn btn-primary" (click)="mostrar(1)">Insertar proveedor</button><br><br>
 
-<button class="btn btn-primary" (click)="mostrar(1)">insertar proveedor</button><br><br>
-
-<div id="formulario" *ngIf="verf==true">
-
-<div class="row">
-  <div class="col-lg-6">
-    <input type="text" id="nombre" class="form-control" [(ngModel)]="prov.nombre"><br>
-    <span style="color: red;" *ngIf="validnombre==false">insertar nombre</span>
+  <div id="formulario" *ngIf="verf">
+    <div class="row">
+      <div class="col-lg-6">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" class="form-control" [(ngModel)]="prov.nombre"><br>
+        <span style="color: red;" *ngIf="validnombre==false">Insertar nombre</span>
+      </div>
+      <div class="col-lg-6">
+        <label for="direccion">Dirección:</label>
+        <input type="text" id="direccion" class="form-control" [(ngModel)]="prov.direccion"><br>
+        <span style="color: red;" *ngIf="validdireccion==false">Insertar dirección</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <label for="celular">Celular:</label>
+        <input type="text" id="celular" class="form-control" [(ngModel)]="prov.celular"><br>
+        <span style="color: red;" *ngIf="validcelular==false">Insertar celular</span>
+      </div>
+      <div class="col-lg-6">
+        <label for="email">Correo electrónico:</label>
+        <input type="text" id="email" class="form-control" [(ngModel)]="prov.email"><br>
+        <span style="color: red;" *ngIf="validemail==false">Insertar correo electrónico</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <button *ngIf="beditar==false" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+        <button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">Guardar</button>
+      </div>
+      <div class="col-lg-6">
+        <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
+      </div>
+    </div>
   </div>
-  <div class="col-lg-6">
-    <input type="text" id="direccion" class="form-control" [(ngModel)]="prov.direccion"><br>
-    <span style="color: red;" *ngIf="validdireccion==false">insertar direccion</span>
-  </div>
-</div>
-<div class="row">
-  <div class="col-lg-6">
-    <input type="celular" id="celular" class="form-control" [(ngModel)]="prov.celular"><br>
-    <span style="color: red;" *ngIf="validcelular==false">insertar celular</span>
-  </div>
-  <div class="col-lg-6">
-    <select id="email" class="form-control form-select" [(ngModel)]="prov.email">
- <option value="email" label="email">email</option>
-      <option value="general" label="general">general</option>
-    </select><br>
-    <span style="color: red;" *ngIf="validcargo==false">elegir el correo</span>
-  </div>
 
-  
-  <button  *ngIf="beditar==false"  class="btn btn-primary" (click)="ingresar ()">guardar</button>
-  <!--<button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">guardar</button>-->
-</div>
-  <div class="col-lg-3">
-    <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
+  <br>
+  <div class="table-responsive">
+    <table class="table table-success table-striped" border="1">
+      <tr>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Celular</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+      <!-- Mostrar los proveedores -->
+      <tr *ngFor="let item of proveedor">
+        <td>{{item.nombre}}</td>
+        <td>{{item.direccion}}</td>
+        <td>{{item.celular}}</td>
+        <td>{{item.email}}</td>
+        <td>
+          <a (click)="cargardatos(item, item.id_proveedor)">
+            <span class="fas fa-edit Editar" title="Editar"></span>
+          </a>
+          <a (click)="pregunta(item.id_proveedor, item.nombre)">
+            <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+          </a>
+        </td>
+      </tr>
+    </table>
   </div>
-  <div class="col-lg-3"></div>
-</div>
-
-<br>
-<div class="table-responsive">
-  <table class="table table-success table-striped" border="1">
-    <tr>
-      <th>nombre</th>
-      <th>direccion</th>
-      <th>Celular</th>
-      <th>email</th>
-      <th>Acciones</th>
-    </tr>
-    <!-- mostrar los proveedores -->
-    <tr *ngFor="let item of proveedor">
-      <td>{{item.nombre}}</td>
-      <td>{{item.direccion}}</td>
-      <td>{{item.celular}}</td>
-      <td>{{item.email}}</td>
-      <td>
-         
-      
-
-      <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
-
-      </td>
-    </tr>
-  </table>
 </div>

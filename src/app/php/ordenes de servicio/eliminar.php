@@ -5,7 +5,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 
 require ("../conexion.php");
 
-$del = "DELETE FROM ordenes_de_servicio WHERE id_ordenes_de_servicio =".$_GET["id"];
+$del = "DELETE FROM ordenes de servicio WHERE id_ordenes_de_servicio =".$_GET["id"];
 
 mysqli_query ($conexion,$del) or die ("no elimino");
 

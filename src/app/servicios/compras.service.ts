@@ -12,6 +12,17 @@ export class ComprasService {
     return this.http.get(`${this.url}consulta.php`);
 
   }
+  consultar_productos() {
+    return this.http.get(`${this.url}consulta_producto.php`);
+}
+
+    consultar_usuarios() {
+    return this.http.get(`${this.url}consulta_usuarios.php`);
+}
+
+  consultar_proveedores() {
+        return this.http.get(`${this.url}consulta_proveedor.php`);
+      }
 
   insertar(articulo: any) {
 
@@ -24,7 +35,7 @@ export class ComprasService {
 
   }
 
-  edit(datos: any) {
+  editar(datos: any) {
 
     return this.http.post(`${this.url}editar.php`, JSON.stringify(datos));
   }

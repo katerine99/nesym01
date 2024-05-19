@@ -5,24 +5,24 @@
 <div id="formulario" *ngIf="verf">
   <div class="row">
     <div class="col-lg-6">
-      <input type="text" id="electromecanica" class="form-control" [(ngModel)]="ordens.electromecanica" placeholder="Orden de electromecánica"><br>
-      <span class="text-danger" *ngIf= "validelectromecanica">Insertar orden de electromecánica</span>
+      <input type="text" id="electromecanica" class="form-control" [(ngModel)]="ordens.electromecanica" placeholder="">
+      <span class="error-message" *ngIf="validelectromecanica">Insertar orden de electromecánica</span>
     </div>
     <div class="col-lg-6">
-      <input type="text" id="metalmecanica" class="form-control" [(ngModel)]="ordens.metalmecanica" placeholder="Orden de metalmecánica"><br>
-      <span class="text-danger" *ngIf="validmetalmecanica">Insertar orden de metalmecánica</span>
+      <input type="text" id="metalmecanica" class="form-control" [(ngModel)]="ordens.metalmecanica" placeholder="">
+      <span class="error-message" *ngIf="validmetalmecanica">Insertar orden de metalmecánica</span>
     </div>
   </div>
   <div class="row">
     <div class="col-lg-6">
-      <span class="text-danger" *ngIf="validasistenciatecnica">Asistencia técnica</span>
+      <input type="text" id="asistenciatecnica" class="form-control" [(ngModel)]="ordens.asistenciatecnica" placeholder="">
+      <span class="error-message" *ngIf="validasistenciatecnica">Insertar asistencia técnica</span>
     </div>
   </div>
   <div class="row">
     <div class="col-lg-3"></div>
     <div class="col-lg-3">
-      <button *ngIf="!beditar" class="btn btn-primary" (click)="ingresar()">Guardar</button>
-      <button *ngIf="beditar" class="btn btn-primary" (click)="editar()">Editar</button>
+      <button class="btn btn-primary" (click)="beditar ? editar() : ingresar()">{{ beditar ? 'Editar' : 'Guardar' }}</button>
     </div>
     <div class="col-lg-3">
       <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
@@ -34,7 +34,7 @@
 <br>
 
 <div class="table-responsive">
-  <table class="table table-success table-striped" border="1">
+  <table class="table table-striped" border="1">
     <thead>
       <tr>
         <th>Electromecánica</th>
@@ -46,16 +46,18 @@
     <tbody>
       <!-- mostrar los repuestos -->
       <tr *ngFor="let item of ordenesdeservicio">
-        <td>{{item.electromecanica}}</td>
-        <td>{{item.metalmecanica}}</td>
-        <td>{{item.asistenciatecnica}}</td>
+        <td>{{ item.electromecanica }}</td>
+        <td>{{ item.metalmecanica }}</td>
+        <td>{{ item.asistenciatecnica }}</td>
         <td>
-          <button class="btn btn-primary" title="Editar" (click)="editar()">
-            <span class="fas fa-edit"></span>
-          </button>
-          <button class="btn btn-danger" title="Eliminar" (click)="eliminar(item.id)">
-            <span class="fas fa-trash-alt"></span>
-          </button>
+          <a (click)="cargardatos(item, item.id_ordenes_de_servicio)">
+            <span class="fas fa-edit Editar" title="Editar"></span>
+          </a>
+
+          <a (click)="pregunta(item.id_ordenes_de_servicio, item.electromecanica)">
+            <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+          </a>
+      
         </td>
       </tr>
     </tbody>

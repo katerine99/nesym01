@@ -1,26 +1,38 @@
 <?php
-header("Access-Control-Allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
-$json = file_get_contents ("php://input");
-
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+require("../conexion.php");
 
- $ins = "INSERT INTO intervencion_de_urgencia (area) VALUES ('luminaria de campo sur')";
-//$ins = "INSERT INTO  intervencion_de_urgencia (area) VALUES ('$params ->nombre)";
+// Verificar que 'area' esté presente en los parámetros
+if (!isset($params->area)) {
+    $response = new stdClass();
+    $response->resultado = 'ERROR';
+    $response->mensaje = 'Área no proporcionada';
+    echo json_encode($response);
+    exit();
+}
 
+// Usar consultas preparadas para evitar inyecciones SQL
+$stmt = $conexion->prepare("INSERT INTO intervencion_de_urgencia (area) VALUES (?)");
+$stmt->bind_param("s", $params->area);
 
-mysqli_query ($conexion,$ins) or die ("no inserto");
+if ($stmt->execute()) {
+    $response = new stdClass();
+    $response->resultado = 'OK';
+    $response->mensaje = 'Datos grabados';
+} else {
+    $response = new stdClass();
+    $response->resultado = 'ERROR';
+    $response->mensaje = 'No se pudo insertar';
+}
 
-Class Result{}
-
-$response = new Result ();
-$response -> resultado = "ok";
-$response -> mensaje = "datos_grabados";
-
-
-header("content-type: application/json");
 echo json_encode($response);
+$stmt->close();
+$conexion->close();
+?>
 

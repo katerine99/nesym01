@@ -1,21 +1,35 @@
 <?php
-header('Access-Control-Allow-origin: *');
+header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
+require("../conexion.php");
 
-require ("../conexion.php");
+// Verificar que el ID está presente en la solicitud
+if (!isset($_GET['id'])) {
+    $response = new stdClass();
+    $response->resultado = 'ERROR';
+    $response->mensaje = 'ID no proporcionado';
+    echo json_encode($response);
+    exit();
+}
 
-$del = "DELETE FROM intervencion_de_urgencia WHERE id_intervencion_de_urgencia =".$_GET["id"];
+$id = intval($_GET['id']); // Asegurarse de que el ID sea un entero
 
-mysqli_query ($conexion,$del) or die ("no elimino");
+// Usar consultas preparadas para evitar inyecciones SQL
+$stmt = $conexion->prepare("DELETE FROM intervencion_de_urgencia WHERE id_intervencion_de_urgencia = ?");
+$stmt->bind_param("i", $id);
 
-Class Result{}
-$response = new Result ();
-$response -> resultado = "ok";
-$response -> mensaje = "area borrada";
+if ($stmt->execute()) {
+    $response = new stdClass();
+    $response->resultado = 'OK';
+    $response->mensaje = 'intervencion borrada';
+} else {
+    $response = new stdClass();
+    $response->resultado = 'ERROR';
+    $response->mensaje = 'No se pudo eliminar';
+}
 
-
-header("content-type: application/json");
 echo json_encode($response);
-
-?>
+$stmt->close();
+$conexion->close();

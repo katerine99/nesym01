@@ -8,7 +8,8 @@ $params = json_decode($json);
 
 require ("../conexion.php");
 
- $editar = "UPDATE  cliente SET nombre='FERROFRUAS S.A', celular='6017865423' WHERE id_cliente=27";
+ //$editar = "UPDATE  cliente SET nombre='FERROFRUAS S.A', celular='6017865423' WHERE id_cliente=27";
+ $editar = "UPDATE  cliente  SET nombre='$params->nombre',  celular='$params->celular WHERE id_cliente='$id'";
 
 
  mysqli_query($conexion, $editar) or die('no edito');

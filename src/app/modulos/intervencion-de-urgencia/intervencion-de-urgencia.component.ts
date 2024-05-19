@@ -68,7 +68,7 @@ export class IntervencionDeUrgenciaComponent implements OnInit {
 
   pregunta(id: any, nombre: any) {
     Swal.fire({
-      title: '¿Está seguro de eliminar el usuario ' + nombre + '?',
+      title: '¿Está seguro de eliminar la intervencion ' + nombre + '?',
       text: 'El proceso no podrá ser revertido!',
       icon: 'warning',
       showCancelButton: true,
@@ -77,16 +77,16 @@ export class IntervencionDeUrgenciaComponent implements OnInit {
       confirmButtonText: 'Sí, Eliminar!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.borrarusuario(id);
+        this.borrarintervencion(id);
       }
     });
   }
 
-  borrarusuario(id: any) {
+  borrarintervencion(id: any) {
     this.sintervenciondeurgencia.eliminar(id).subscribe((datos: any) => {
       if (datos['resultado'] == 'OK') {
         this.consulta();
-        Swal.fire('¡Eliminado!', 'El usuario ha sido eliminado.', 'success');
+        Swal.fire('¡Eliminado!', 'la intervencion ha sido eliminado.', 'success');
       }
     });
   }
@@ -111,11 +111,11 @@ export class IntervencionDeUrgenciaComponent implements OnInit {
   }
 
   eliminar() {
-    if (confirm("¿Estás seguro de eliminar el área?")) {
+    if (confirm("¿Estás seguro de eliminar la intervencion?")) {
       this.sintervenciondeurgencia.eliminar(this.idintur).subscribe((datos: any) => {
         if (datos['resultado'] == 'OK') {
           this.consulta();
-          Swal.fire('¡Eliminado!', 'El área ha sido eliminada.', 'success');
+          Swal.fire('¡Eliminado!', 'la intervencion ha sido eliminada.', 'success');
           this.mostrar(0);
         }
       });

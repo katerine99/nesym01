@@ -13,7 +13,7 @@ export class CiudadService {
 
   }
   consultar_depto() {
-    return this.http.get(`${this.url}consultar_depto.php`);
+    return this.http.get(`${this.url}consulta_depto.php`);
 }
 
   insertar(articulo: any) {
@@ -27,9 +27,10 @@ export class CiudadService {
 
   }
 
-  edit(datos: any) {
-
-    return this.http.post(`${this.url}editar.php`, JSON.stringify(datos));
-
-  }
-}
+  editar(datos: any, id: number) {
+    return this.http.post(
+      `${this.url}editar.php?id=${id}`,
+      JSON.stringify(datos)
+    );
+    }
+    }

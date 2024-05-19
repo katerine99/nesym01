@@ -79,4 +79,58 @@ ingresar() {
     this.limpiar();
   }
 }
+pregunta(id: any, nombre: any) {
+  console.log('entro con el id' + id);
+  Swal.fire({
+    title: '¿ Esta seguro de eliminar la marca ' + nombre + '?',
+    text: 'El proceso no podra ser revertido!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, Eliminar!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.borrarmarca(id);
+      Swal.fire({
+        title: 'Eliminado!',
+        text: 'la marca ha sido eliminada.',
+        icon: 'success',
+      });
+    }
+  });
+}
+
+borrarmarca(id: any) {
+  this.smarca.eliminar(id).subscribe((datos: any) => {
+    if (datos['resultado'] == 'OK') {
+      this.consulta();
+    }
+  });
+}
+
+cargardatos(datos: any, id: number) {
+  //console.log(datos);
+  this.marc.nombre = datos.nombre;
+  this.idmar = id;
+  this.mostrar(1);
+  this.beditar = true;
+}
+
+editar() {
+  this.validar();
+
+  if (
+    this.validnombre == true 
+    
+  ) {
+    this.smarca.edit(this.marc, ).subscribe((datos: any) => {
+      if (datos['resultado'] == 'ok') {
+        // alerta datos
+        this.consulta();
+      }
+    });
+    this.mostrar(0);
+  }
+}
 }

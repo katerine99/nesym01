@@ -1,25 +1,25 @@
 <?php
-header("Access-Control-Allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
-$json = file_get_contents ("php://input");
-
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+require("../conexion.php");
 
- $editar = "UPDATE  ciudad SET nombre='POLICARPA' WHERE id_ciudad=24";
+$id = $params->id;
+$nombre = $params->nombre;
+$fo_depto = $params->fo_depto;
 
+$editar = "UPDATE ciudad SET nombre='$nombre', fo_depto='$fo_depto' WHERE id_ciudad='$id'";
 
- mysqli_query($conexion, $editar) or die('no edito');
+mysqli_query($conexion, $editar) or die("no edito");
 
-Class Result{}
+class Result {}
+$response = new Result();
+$response->resultado = "OK";
+$response->mensaje = "Datos modificados";
 
-$response = new Result ();
-$response -> resultado = 'OK';
-$response -> mensaje = 'datos modificados';
+echo json_encode($response);
 
-
-header ('content-type: application/json');
-echo json_encode ($response);
-?>

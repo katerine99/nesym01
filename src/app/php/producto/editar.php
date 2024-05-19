@@ -1,25 +1,27 @@
 <?php
-header("Access-Control-Allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-$json = file_get_contents ("php://input");
+$json = file_get_contents("php://input");
 
 $params = json_decode($json);
 
-require ("../conexion.php");
+require("../conexion.php");
 
- $editar = "UPDATE  producto SET nombre='PINZA AMPERIMETRICA' WHERE id_producto=5";
+$id = $params->id_producto;
+$nombre = $params->nombre;
+$marca = $params->fo_marca;
 
+$editar = "UPDATE producto SET nombre='$nombre',marca='$fo_marca' WHERE id_producto='$id'";
 
- mysqli_query($conexion, $editar) or die('no edito');
+mysqli_query($conexion, $editar) or die('no edito');
 
-Class Result{}
+class Result {}
 
-$response = new Result ();
-$response -> resultado = 'OK';
-$response -> mensaje = 'datos modificados';
+$response = new Result();
+$response->resultado = 'OK';
+$response->mensaje = 'datos modificados';
 
-
-header ('content-type: application/json');
-echo json_encode ($response);
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>

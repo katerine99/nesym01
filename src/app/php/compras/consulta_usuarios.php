@@ -5,9 +5,9 @@ header('Content-Type: application/json');
 
 require("../conexion.php");
 
-$con = "SELECT * FROM marca ORDER BY nombre";
+$con = "SELECT * FROM usuarios ORDER BY nombre";
 
-$res = mysqli_query($conexion, $con) or die('no consulto la marca');
+$res = mysqli_query($conexion, $con) or die('no consulto el usuario');
 
 $vec = [];
 while ($reg = mysqli_fetch_array($res)) {
