@@ -76,9 +76,10 @@ consulta() {
 ingresar() {
   //console.log(this.cat);
   this.validar();
-  if (this.validnombre == true && this.validcelular==true) {
+  if (this.validnombre == true &&
+     this.validcelular==true) {
 
-    this.scliente.insertar(this.cliente).subscribe((datos: any) => {
+    this.scliente.insertar(this.client).subscribe((datos: any) => {
       if (datos['resultado'] == 'OK') {
         //alert(datos['mensaje']);
         this.consulta();

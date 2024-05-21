@@ -10,13 +10,14 @@ import Swal from 'sweetalert2';
 export class ProductoComponent {
 
   verf = false;
-  marcas: any[] = [];
-  productos: any[] = [];
+  marcas: any;
+  productos: any;
   idprod: any;
   product = {
     nombre: "",
     fo_marca: 0,
   };
+
   validnombre = true;
   validfomarca = true;
   beditar = false;
@@ -26,6 +27,7 @@ export class ProductoComponent {
   ngOnInit(): void {
     this.consulta();
     this.consulta_marca();
+    this.limpiar();
   }
 
   consulta() {
@@ -43,7 +45,9 @@ export class ProductoComponent {
   ingresar() {
     this.validar();
 
-    if (this.validnombre == true && this.validfomarca == true) {
+    if (this.validnombre == true && 
+      this.validfomarca == true) {
+
       this.sproducto.insertar(this.product).subscribe((datos: any) => {
         if (datos['resultado'] == 'OK') {
           this.consulta();
@@ -94,8 +98,10 @@ export class ProductoComponent {
   editar() {
     this.validar();
 
-    if (this.validnombre == true && this.validfomarca == true) {
-      this.sproducto.edit (this.product, this.idprod).subscribe((datos: any) => {
+    if (this.validnombre == true &&
+       this.validfomarca == true) {
+
+      this.sproducto.editar(this.product, this.idprod).subscribe((datos: any) => {
         if (datos['resultado'] == 'ok') {
           this.consulta();
         }
@@ -134,4 +140,17 @@ export class ProductoComponent {
         break;
     }
   }
-}
+  eliminar() {
+    if (confirm("¿Estás seguro de eliminar el producto?")) {
+      this.sproducto.eliminar(this.idprod).subscribe((datos: any) => {
+        if (datos['resultado'] == 'OK') {
+          this.consulta();
+          Swal.fire('¡Eliminado!', 'el producto ha sido eliminado.', 'success');
+          this.mostrar(0);
+        }
+      });
+    }
+  }
+  
+  }
+

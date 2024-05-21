@@ -12,7 +12,7 @@ export class IntervencionDeUrgenciaComponent implements OnInit {
   intervencion_de_urgencia: any;
   idintur: any;
   interurg = {
-    area: ''
+    area: ""
   };
 
   validarea = true;
@@ -40,13 +40,16 @@ export class IntervencionDeUrgenciaComponent implements OnInit {
   }
 
   limpiar() {
-    this.interurg.area = '';
+    this.interurg.area = "";
   }
 
   validar() {
-    this.validarea = this.interurg.area !== '';
+    if (this.interurg.area == "") {
+      this.validarea = false;
+    } else {
+      this.validarea = true;
+    }
   }
-
   consulta() {
     this.sintervenciondeurgencia.consultar().subscribe((result: any) => {
       this.intervencion_de_urgencia = result;
@@ -55,7 +58,8 @@ export class IntervencionDeUrgenciaComponent implements OnInit {
 
   ingresar() {
     this.validar();
-    if (this.validarea) {
+
+    if (this.validarea==true) {
       this.sintervenciondeurgencia.insertar(this.interurg).subscribe((datos: any) => {
         if (datos['resultado'] == 'OK') {
           this.consulta();
@@ -100,7 +104,9 @@ export class IntervencionDeUrgenciaComponent implements OnInit {
 
   editar() {
     this.validar();
-    if (this.validarea) {
+
+    if (this.validarea==true) {
+
       this.sintervenciondeurgencia.editar(this.interurg, this.idintur).subscribe((datos: any) => {
         if (datos['resultado'] == 'OK') {
           this.consulta();

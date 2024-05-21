@@ -1,3 +1,4 @@
+
 <div class="container">
   <h1>PRODUCTOS</h1>
   <button class="btn btn-primary" (click)="mostrar(1)">Insertar Producto</button><br><br>
@@ -38,14 +39,14 @@
         <th>Acciones</th>
       </tr>
       <!-- Mostrar los productos -->
-      <tr *ngFor="let producto of productos">
-        <td>{{ producto.nombre }}</td>
-        <td>{{ producto.nmarca }}</td>
+      <tr *ngFor="let item of productos">
+        <td>{{ item.nombre }}</td>
+        <td>{{ item.nmarca }}</td>
         <td>
-          <a (click)="cargardatos(producto, producto.id_producto)">
+          <a (click)="cargardatos(item,item.id_producto)">
             <span class="fas fa-edit Editar" title="Editar"></span>
           </a>
-          <a (click)="pregunta(producto.id_producto, producto.nombre)">
+          <a (click)="pregunta(item.id_producto, item.nombre)">
             <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
           </a>
         </td>

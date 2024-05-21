@@ -7,19 +7,19 @@
     <div class="row">
       <div class="col-lg-6">
         <label for="preventivo">Reporte preventivo:</label>
-        <input type="text" id="preventivo" class="form-control" [(ngModel)]="reporte.preventivo" placeholder="">
+        <input type="text" id="preventivo" class="form-control" [(ngModel)]="report.preventivo" placeholder="">
         <span style="color: red;" *ngIf="!validpreventivo">Insertar reporte preventivo</span>
       </div>
       <div class="col-lg-6">
         <label for="correctivo">Reporte correctivo:</label>
-        <input type="text" id="correctivo" class="form-control" [(ngModel)]="reporte.correctivo" placeholder="">
+        <input type="text" id="correctivo" class="form-control" [(ngModel)]="report.correctivo" placeholder="">
         <span style="color: red;" *ngIf="!validcorrectivo">Insertar reporte correctivo</span>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-6">
         <label for="emergente">Reporte emergente:</label>
-        <input type="text" id="emergente" class="form-control" [(ngModel)]="reporte.emergente" placeholder="">
+        <input type="text" id="emergente" class="form-control" [(ngModel)]="report.emergente" placeholder="">
         <span style="color: red;" *ngIf="!validemergente">Insertar reporte emergente</span>
       </div>
     </div>
@@ -38,26 +38,29 @@
   <br>
   <div class="table-responsive">
     <table class="table table-striped" border="1">
-      <tr>
-        <th>Preventivo</th>
-        <th>Correctivo</th>
-        <th>Emergente</th>
-        <th>Acciones</th>
-      </tr>
-      <!-- Mostrar los reportes -->
-      <tr *ngFor="let item of reporte">
-        <td>{{ item.preventivo }}</td>
-        <td>{{ item.correctivo }}</td>
-        <td>{{ item.emergente }}</td>
-        <td>
-          <a (click)="cargardatos(item, item.id_reporte)">
-            <span class="fas fa-edit Editar" title="Editar"></span>
-          </a>
-          <a (click)="pregunta(item.id_reporte, item.preventivo)">
-            <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
-          </a>
-        </td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Preventivo</th>
+          <th>Correctivo</th>
+          <th>Emergente</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of reportes">
+          <td>{{ item.preventivo }}</td>
+          <td>{{ item.correctivo }}</td>
+          <td>{{ item.emergente }}</td>
+          <td>
+            <a (click)="cargardatos(item, item.id_reporte)">
+              <span class="fas fa-edit Editar" title="Editar"></span>
+            </a>
+            <a (click)="pregunta(item.id_reporte, item.preventivo)">
+              <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
+            </a>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </div>

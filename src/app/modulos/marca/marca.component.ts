@@ -69,7 +69,7 @@ ingresar() {
   this.validar();
   if (this.validnombre == true) {
 
-    this.smarca.insertar(this.marca).subscribe((datos: any) => {
+    this.smarca.insertar(this.marc).subscribe((datos: any) => {
       if (datos['resultado'] == 'OK') {
         //alert(datos['mensaje']);
         this.consulta();
@@ -124,7 +124,7 @@ editar() {
     this.validnombre == true 
     
   ) {
-    this.smarca.edit(this.marc, ).subscribe((datos: any) => {
+    this.smarca.editar(this.marc, this.idmar ).subscribe((datos: any) => {
       if (datos['resultado'] == 'ok') {
         // alerta datos
         this.consulta();

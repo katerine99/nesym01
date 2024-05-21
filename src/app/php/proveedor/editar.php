@@ -8,7 +8,8 @@ $params = json_decode($json);
 
 require ("../conexion.php");
 
- $editar = "UPDATE  proveedor SET nombre='SIEMENS', direccion='carrera 24 #85-34', celular='6023457645', email='siemens@gmail.com' WHERE id_proveedor=6";
+ //$editar = "UPDATE  proveedor SET nombre='SIEMENS', direccion='carrera 24 #85-34', celular='6023457645', email='siemens@gmail.com' WHERE id_proveedor=6";
+ $editar = "UPDATE  proveedor  SET nombre='$params->nombre',  direccion='$params->direccion', celular='$params->celular', email='$params->email' WHERE id_proveedor='$id'";
 
 
  mysqli_query($conexion, $editar) or die('no edito');

@@ -1,26 +1,46 @@
 <?php
-header("Access-Control-Allow-origin: *");
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-$json = file_get_contents ("php://input");
+// Recibe el JSON de la petición
+$json = file_get_contents("php://input");
 
+// Decodifica el JSON a un objeto PHP
 $params = json_decode($json);
 
-require ("../conexion.php");
+// Incluye el archivo de conexión a la base de datos
+require("../conexion.php");
 
- //$ins = "INSERT INTO repuestos (cantidad, total) VALUES ('23','72')";
-$ins = "INSERT INTO  repuestos (cantidad, total) VALUES '$params ->cantidad', '$params->total";
+// Verifica que la conexión sea exitosa
+if (!$conexion) {
+    die("Conexión fallida: " . mysqli_connect_error());
+}
 
+// Prepara la consulta SQL usando sentencias preparadas
+$stmt = $conexion->prepare("INSERT INTO repuestos (cantidad, total) VALUES (?, ?)");
 
-mysqli_query ($conexion,$ins) or die ("no inserto");
+// Vincula los parámetros
+$stmt->bind_param("ii", $params->cantidad, $params->total);
 
-Class Result{}
+// Ejecuta la consulta y verifica si fue exitosa
+if ($stmt->execute()) {
+    // Define la clase Result para la respuesta
+    class Result {}
+    
+    // Crea una nueva instancia de Result y establece el resultado y el mensaje
+    $response = new Result();
+    $response->resultado = "OK";
+    $response->mensaje = "Datos grabados";
 
-$response = new Result ();
-$response -> resultado = "ok";
-$response -> mensaje = "datos_grabados";
+    // Devuelve la respuesta en formato JSON
+    header("Content-Type: application/json");
+    echo json_encode($response);
+} else {
+    // Maneja el error si la consulta falla
+    http_response_code(500);
+    echo json_encode(array("resultado" => "Error", "mensaje" => "No se pudo insertar el repuesto", "error" => $stmt->error));
+}
 
-
-header("content-type: application/json");
-echo json_encode($response);
-?>
+// Cierra la sentencia y la conexión
+$stmt->close();
+$conexion->close();

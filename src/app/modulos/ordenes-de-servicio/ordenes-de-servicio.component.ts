@@ -55,9 +55,22 @@ export class OrdenesDeServicioComponent {
 
   //validar
   validar() {
-    this.validelectromecanica = this.ordens.electromecanica !== "";
-    this.validmetalmecanica = this.ordens.metalmecanica !== "";
-    this.validasistenciatecnica = this.ordens.asistenciatecnica !== "";
+    if (this.ordens.electromecanica == "") {
+      this.validelectromecanica = false;
+    } else {
+      this.validelectromecanica = true;
+    }
+    if (this.ordenesdeservicio.metalmecanica == "") {
+      this.validmetalmecanica= false;
+    } else {
+      this.validmetalmecanica= true;
+    }
+
+    if (this.ordens.asistenciatecnica== "") {
+      this.validasistenciatecnica = false;
+    } else {
+      this.validasistenciatecnica = true;
+    }
   }
 
   consulta() {
@@ -68,14 +81,18 @@ export class OrdenesDeServicioComponent {
 
   ingresar() {
     this.validar();
-    if (this.validelectromecanica && this.validmetalmecanica && this.validasistenciatecnica) {
+
+    if (this.validelectromecanica==true  && 
+      this.validmetalmecanica==true && 
+      this.validasistenciatecnica==true) {
+        
       this.sordenesdeservicio.insertar(this.ordens).subscribe((datos: any) => {
         if (datos['resultado'] === 'OK') {
-          Swal.fire('¡Éxito!', datos['mensaje'], 'success');
+          
           this.consulta();
         }
       });
-      this.mostrar(0);
+      this.mostrar(0)
       this.limpiar();
     }
   }
@@ -111,10 +128,14 @@ export class OrdenesDeServicioComponent {
 
   editar() {
     this.validar();
-    if (this.validelectromecanica && this.validmetalmecanica && this.validasistenciatecnica) {
-      this.sordenesdeservicio.edit(this.ordens).subscribe((datos: any) => {
+
+    if (this.validelectromecanica ==true && 
+      this.validmetalmecanica ==true && 
+      this.validasistenciatecnica ==true ) {
+
+      this.sordenesdeservicio.editar(this.ordens, this.idord).subscribe((datos: any) => {
         if (datos['resultado'] === 'OK') {
-          Swal.fire('¡Éxito!', datos['mensaje'], 'success');
+          
           this.consulta();
         }
       });

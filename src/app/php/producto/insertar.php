@@ -6,20 +6,44 @@ $json = file_get_contents("php://input");
 
 $params = json_decode($json);
 
+if ($params === null) {
+    $response = (object) [
+        'resultado' => 'error',
+        'mensaje' => 'error_decodificacion_json'
+    ];
+    echo json_encode($response);
+    exit;
+}
+
 require("../conexion.php");
 
 $nombre = $params->nombre;
 $marca = $params->marca;
 
-$ins = "INSERT INTO producto (nombre, fo_marca) VALUES ('$nombre', $fo_marca)";
+if (!$conexion) {
+    $response = (object) [
+        'resultado' => 'error',
+        'mensaje' => 'error_conexion_bd'
+    ];
+    echo json_encode($response);
+    exit;
+}
 
-mysqli_query($conexion, $ins) or die("no inserto");
+$ins = $conexion->prepare("INSERT INTO producto (nombre, fo_marca) VALUES (?, ?)");
+$ins->bind_param("ss", $nombre, $marca);
+$ins->execute();
 
-class Result {}
-
-$response = new Result();
-$response->resultado = "ok";
-$response->mensaje = "datos_grabados";
+if ($ins->affected_rows > 0) {
+    $response = (object) [
+        'resultado' => 'ok',
+        'mensaje' => 'datos_grabados'
+    ];
+} else {
+    $response = (object) [
+        'resultado' => 'error',
+        'mensaje' => 'error_al_grabar_datos'
+    ];
+}
 
 header("Content-Type: application/json");
 echo json_encode($response);

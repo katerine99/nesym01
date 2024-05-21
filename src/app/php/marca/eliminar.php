@@ -18,4 +18,4 @@ $response -> mensaje = "marca borrada";
 header("content-type: application/json");
 echo json_encode($response);
 
-?>
+

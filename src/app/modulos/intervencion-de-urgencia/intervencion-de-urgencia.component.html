@@ -15,8 +15,8 @@
 <div class="row">
   <div class="col-lg-3"></div>
   <div class="col-lg-3">
-    <button *ngIf="!beditar" class="btn btn-primary" (click)="ingresar()">Guardar</button>
-    <button *ngIf="beditar" class="btn btn-primary" (click)="editar()">Editar</button>
+    <button *ngIf="beditar==false" class="btn btn-primary" (click)="ingresar()">Guardar</button>
+        <button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">Editar</button>
   </div>
   <div class="col-lg-3">
     <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
@@ -38,10 +38,10 @@
       <tr *ngFor="let item of intervencion_de_urgencia">
         <td>{{item.area}}</td>
         <td>
-          <a (click)="cargardatos(item, item.intervencion_de_urgencia)">
+          <a (click)="cargardatos(item, item.id_intervencion_de_urgencia)">
             <span class="fas fa-edit editar" style="color: #3131ca;" title="Editar"></span>
           </a>
-          <a (click)="pregunta(item.id, item.area)">
+          <a (click)="pregunta(item.id_intervencion_de_urgencia, item.area)">
             <span class="fas fa-trash-alt eliminar" style="color: #c92b2b;" title="Eliminar"></span>
           </a>
         </td>

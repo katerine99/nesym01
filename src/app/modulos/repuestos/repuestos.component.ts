@@ -79,7 +79,8 @@ consulta() {
 ingresar() {
   //console.log(this.cat);
   this.validar();
-  if (this.validcantidad == true && this.validtotal) {
+  if (this.validcantidad == true && 
+    this.validtotal==true) {
 
     this.srepuestos.insertar(this.repuest).subscribe((datos: any) => {
       if (datos['resultado'] == 'OK') {

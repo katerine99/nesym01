@@ -1,21 +1,32 @@
 <?php
-header('Access-Control-Allow-origin: *');
+header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
+require("../conexion.php");
 
-require ("../conexion.php");
+$id = isset($_GET["id"]) ? $_GET["id"] : null;
 
-$del = "DELETE FROM ordenes de servicio WHERE id_ordenes_de_servicio =".$_GET["id"];
+if ($id !== null) {
+    $del = "DELETE FROM ordenes_de_servicio WHERE id_ordenes_de_servicio = $id";
 
-mysqli_query ($conexion,$del) or die ("no elimino");
+    if (mysqli_query($conexion, $del)) {
+        $response = array(
+            'resultado' => 'ok',
+            'mensaje' => 'orden_eliminada'
+        );
+    } else {
+        $response = array(
+            'resultado' => 'error',
+            'mensaje' => 'no_elimino'
+        );
+    }
+} else {
+    $response = array(
+        'resultado' => 'error',
+        'mensaje' => 'id_no_proveido'
+    );
+}
 
-Class Result{}
-$response = new Result ();
-$response -> resultado = "ok";
-$response -> mensaje = "orden eliminada";
-
-
-header("content-type: application/json");
+header("Content-Type: application/json");
 echo json_encode($response);
-
 ?>

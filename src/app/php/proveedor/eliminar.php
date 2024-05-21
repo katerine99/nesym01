@@ -5,14 +5,14 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 
 require ("../conexion.php");
 
-$del = "DELETE FROM usuarios WHERE id_usuario=".$_GET["id"];
+$del = "DELETE FROM proveedor WHERE id_proveedor=".$_GET["id"];
 
 mysqli_query ($conexion,$del) or die ("no elimino");
 
 Class Result{}
 $response = new Result ();
 $response -> resultado = "ok";
-$response -> mensaje = "usuario borrado";
+$response -> mensaje = "proveedor borrado";
 
 
 header("content-type: application/json");

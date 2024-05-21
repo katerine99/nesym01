@@ -1,19 +1,18 @@
 <h1>MARCA</h1>
 
-<button class="btn btn-primary" (click)="mostrar(1)">insertar marca</button><br><br>
+<button class="btn btn-primary" (click)="mostrar(1)">Insertar marca</button><br><br>
 
-<div id="formulario" *ngIf="verf==true">
+<div id="formulario" *ngIf="verf">
   <div class="row">
     <div class="col-lg-2">
       <input type="text" id="nombre" class="form-control" [(ngModel)]="marc.nombre" placeholder="Nombre de la marca" style="border-color: green;"><br>
-      <span style="color: red;" *ngIf="validnombre==false">insertar nombre</span>
+      <span style="color: red;" *ngIf="!validnombre">Insertar nombre</span>
     </div>
     <div class="col-lg-3">
-      <button *ngIf="beditar==false" class="btn btn-primary" (click)="ingresar()">guardar</button>
-      <button *ngIf="beditar==true" class="btn btn-primary" (click)="editar()">guardar</button>
+      <button class="btn btn-primary" (click)="beditar ? editar() : ingresar()">Guardar</button>
     </div>
     <div class="col-lg-3">
-      <button class="btn btn-secondary" (click)="mostrar(0)">cancelar</button>
+      <button class="btn btn-secondary" (click)="mostrar(0)">Cancelar</button>
     </div>
   </div>
 
@@ -22,17 +21,16 @@
   <div class="table-responsive">
     <table class="table table-success table-striped" border="1">
       <tr>
-        <th>nombre</th>
+        <th>Nombre</th>
         <th>Acciones</th>
       </tr>
-      <!-- mostrar los productos -->
       <tr *ngFor="let item of marca">
         <td>{{item.nombre}}</td>
         <td>
-          <a (click)="cargardatos(item, item.id_depto)">
+          <a (click)="cargardatos(item, item.id_marca)">
             <span class="fas fa-edit Editar" title="Editar"></span>
           </a>
-          <a (click)="pregunta(item.id_depto, item.nombre)">
+          <a (click)="pregunta(item.id_marca, item.nombre)">
             <span class="fas fa-trash-alt Eliminar" title="Eliminar"></span>
           </a>
         </td>

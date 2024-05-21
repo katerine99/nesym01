@@ -1,26 +1,26 @@
 <?php
-header("Access-Control-Allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
-$json = file_get_contents ("php://input");
-
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+require("../conexion.php");
 
- $ins = "INSERT INTO ordenes_de_servicio (electromecanica, metalmecanica, asistencia_tecnica) VALUES ('instalacion de sensores', 'supervision', 'asistencia tecnica')";
-//$ins = "INSERT INTO  ordenes_de_servicio (electromecanica, metalmecanica, asistencia_tecnica) VALUES ('$params ->electromecanica','$params->metalmecanica','$params->asistencia_tecnica')";
+$electromecanica = mysqli_real_escape_string($conexion, $params->electromecanica);
+$metalmecanica = mysqli_real_escape_string($conexion, $params->metalmecanica);
+$asistenciatecnica = mysqli_real_escape_string($conexion, $params->asistenciatecnica);
 
+$ins = "INSERT INTO ordenes_de_servicio (electromecanica, metalmecanica, asistenciatecnica) VALUES ('$electromecanica', '$metalmecanica', '$asistenciatecnica')";
 
-mysqli_query ($conexion,$ins) or die ("no inserto");
+if (mysqli_query($conexion, $ins)) {
+    class Result {}
+    $response = new Result();
+    $response->resultado = "OK";
+    $response->mensaje = "Datos grabados";
 
-Class Result{}
-
-$response = new Result ();
-$response -> resultado = "ok";
-$response -> mensaje = "datos_grabados";
-
-
-header("content-type: application/json");
-echo json_encode($response);
-?>
+    echo json_encode($response);
+} else {
+    die("Error al insertar datos: " . mysqli_error($conexion));
+}

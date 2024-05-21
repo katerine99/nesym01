@@ -104,7 +104,13 @@ export class ComprasComponent implements OnInit {
 
   ingresar() {
     this.validar();
-    if (this.validcantidad && this.validtotal && this.validfoproducto && this.validfousuarios && this.validfoproveedor) {
+    if (this.validcantidad ==true && 
+      this.validtotal ===true && 
+
+      this.validfoproducto ==true &&
+       this.validfousuarios ==true && 
+       this.validfoproveedor==true) {
+
       this.scompras.insertar(this.comp).subscribe((datos: any) => {
         if (datos['resultado'] == 'OK') {
           this.consulta();

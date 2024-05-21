@@ -93,7 +93,7 @@ ingresar() {
   this.validar();
   if (this.validnombre == true && this.validdireccion == true && this.validcelular == true && this.validemail == true) {
 
-    this.sproveedor.insertar(this.proveedor).subscribe((datos: any) => {
+    this.sproveedor.insertar(this.prov).subscribe((datos: any) => {
       if (datos['resultado'] == 'OK') {
         //alert(datos['mensaje']);
         this.consulta();
