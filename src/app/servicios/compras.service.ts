@@ -1,42 +1,64 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ComprasService {
 
-  url = 'http://localhost/nesym01/src/app/php/compras/';
+  private url = 'http://localhost/nesym01/src/app/php/compras/';
+
   constructor(private http: HttpClient) { }
 
-  consultar() {
+  consultar(): Observable<any> {
     return this.http.get(`${this.url}consulta.php`);
-
   }
-  consultar_productos() {
+
+  consultar_productos(): Observable<any> {
     return this.http.get(`${this.url}consulta_producto.php`);
-}
+  }
 
-    consultar_usuarios() {
+  consultar_usuarios(): Observable<any> {
     return this.http.get(`${this.url}consulta_usuarios.php`);
+  }
+
+  consultar_proveedores(): Observable<any> {
+    return this.http.get(`${this.url}consulta_proveedor.php`);
+  }
+
+  insertar(articulo: any): Observable<any> {
+    return this.http.post(`${this.url}insertar.php`, JSON.stringify(articulo)).pipe(
+      catchError(error => {
+        console.error('Error al insertar artículo:', error);
+        throw error;
+      })
+    );
+  }
+
+  eliminar(id: number): Observable<any> {
+    return this.http.get(`${this.url}eliminar.php?id=${id}`).pipe(
+      catchError(error => {
+        console.error('Error al eliminar artículo:', error);
+        throw error;
+      })
+    );
+  }
+
+  editar(datos: any, id: number) {
+    return this.http.post(
+      `${this.url}editar.php?id=${id}`,
+      JSON.stringify(datos)
+    );
+  }
 }
 
-  consultar_proveedores() {
-        return this.http.get(`${this.url}consulta_proveedor.php`);
-      }
 
-  insertar(articulo: any) {
 
-    return this.http.post(`${this.url}insertar.php`, JSON.stringify(articulo));
 
-  }
-  eliminar(id: number) {
 
-    return this.http.get(`${this.url}eliminar.php?id=${id}`);
 
-  }
 
-  editar(datos: any) {
 
-    return this.http.post(`${this.url}editar.php`, JSON.stringify(datos));
-  }
-}
+

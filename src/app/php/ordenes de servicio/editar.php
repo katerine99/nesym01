@@ -1,26 +1,40 @@
 <?php
-header("Access-Control-Allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header('Content-Type: application/json');
 
-$json = file_get_contents ("php://input");
-
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+require("../conexion.php");
 
-//$editar = "UPDATE  ordenes_de_servicio SET ELECTROMECANICA='arranque de pozos de produccion de PETROLEO', METALMECANICA='automatizacion de procesos', ASISTENCIA_TECNICA ='asistencia especializada en RADIADORES' WHERE id_ordenes_de_servicio=3";
+$response = new stdClass();
 
-mysqli_query($conexion, $editar) or die('no edito');
-$editar = "UPDATE ordenes de servicio  SET electromecanica='$params->electromecanica',  metalmecanica='$params->metalmecanica' , asistenciatecnica ='$params->asistenciatecnica' WHERE id_ordnes_de_servicio='$id'";
-;
+if (isset($params->electromecanica) && isset($params->metalmecanica) && isset($params->asistenciatecnica) && isset($params->id)) {
+    $electromecanica = mysqli_real_escape_string($conexion, $params->electromecanica);
+    $metalmecanica = mysqli_real_escape_string($conexion, $params->metalmecanica);
+    $asistenciatecnica = mysqli_real_escape_string($conexion, $params->asistenciatecnica);
+    $id = mysqli_real_escape_string($conexion, $params->id);
 
-Class Result{}
+    $editar = "UPDATE ordenes_de_servicio 
+               SET electromecanica='$electromecanica', 
+                   metalmecanica='$metalmecanica', 
+                   asistenciatecnica='$asistenciatecnica' 
+               WHERE id_ordenes_de_servicio='$id'";
 
-$response = new Result ();
-$response -> resultado = 'OK';
-$response -> mensaje = 'datos modificados';
+    if (mysqli_query($conexion, $editar)) {
+        $response->resultado = 'OK';
+        $response->mensaje = 'Datos modificados';
+    } else {
+        $response->resultado = 'ERROR';
+        $response->mensaje = 'No se pudo editar: ' . mysqli_error($conexion);
+    }
+} else {
+    $response->resultado = 'ERROR';
+    $response->mensaje = 'Datos incompletos';
+}
 
+echo json_encode($response);
 
-header ('content-type: application/json');
-echo json_encode ($response);
+mysqli_close($conexion);
 ?>

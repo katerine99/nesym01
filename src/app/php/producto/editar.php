@@ -3,37 +3,22 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
 $json = file_get_contents("php://input");
-
 $params = json_decode($json);
-
-if ($params === null) {
-    $response = (object) [
-        'resultado' => 'error',
-        'mensaje' => 'error_decodificacion_json'
-    ];
-    echo json_encode($response);
-    exit;
-}
 
 require("../conexion.php");
 
-$id = $params->id_producto;
-$nombre = $params->nombre;
-$marca = $params->fo_marca;
+$id = $_GET['id'];
+$nombre = $params->nombre; 
+$fo_marca= $params->fo_marca; 
 
-$editar = "UPDATE producto SET nombre='$nombre', fo_marca='$marca' WHERE id_producto='$id'";
+$editar = "UPDATE producto SET nombre='$nombre', fo_marca='$fo_marca' WHERE id_producto='$id'";
 
-if (!mysqli_query($conexion, $editar)) {
-    $response = (object) [
-        'resultado' => 'error',
-        'mensaje' => 'error_al_editar_datos'
-    ];
-} else {
-    $response = (object) [
-        'resultado' => 'OK',
-        'mensaje' => 'datos_modificados'
-    ];
-}
+mysqli_query($conexion, $editar) or die('no edito');
+
+class Result {}
+$response = new Result();
+$response->resultado = 'OK';
+$response->mensaje = 'datos modificados';
 
 header('Content-Type: application/json');
 echo json_encode($response);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductoService } from 'src/app/servicios/producto.service';
 import Swal from 'sweetalert2';
 
@@ -7,8 +7,7 @@ import Swal from 'sweetalert2';
   templateUrl: './producto.component.html',
   styleUrls: ['./producto.component.scss']
 })
-export class ProductoComponent {
-
+export class ProductoComponent implements OnInit {
   verf = false;
   marcas: any;
   productos: any;
@@ -31,30 +30,46 @@ export class ProductoComponent {
   }
 
   consulta() {
-    this.sproducto.consultar().subscribe((result: any) => {
-      this.productos = result;
-    });
+    this.sproducto.consultar().subscribe(
+      (result: any) => {
+        this.productos = result;
+      },
+      (error) => {
+        console.error('Error al consultar productos:', error);
+        // Aquí podrías mostrar un mensaje al usuario informando del error
+      }
+    );
   }
 
   consulta_marca() {
-    this.sproducto.consultar_marca().subscribe((result: any) => {
-      this.marcas = result;
-    });
+    this.sproducto.consulta_marca().subscribe(
+      (result: any) => {
+        this.marcas = result;
+      },
+      (error) => {
+        console.error('Error al consultar marcas:', error);
+        // Aquí podrías mostrar un mensaje al usuario informando del error
+      }
+    );
   }
 
   ingresar() {
     this.validar();
 
-    if (this.validnombre == true && 
-      this.validfomarca == true) {
-
-      this.sproducto.insertar(this.product).subscribe((datos: any) => {
-        if (datos['resultado'] == 'OK') {
-          this.consulta();
+    if (this.validnombre && this.validfomarca) {
+      this.sproducto.insertar(this.product).subscribe(
+        (datos: any) => {
+          if (datos['resultado'] == 'OK') {
+            this.consulta();
+          }
+          this.mostrar(0);
+          this.limpiar();
+        },
+        (error) => {
+          console.error('Error al insertar producto:', error);
+          // Aquí podrías mostrar un mensaje al usuario informando del error
         }
-      });
-      this.mostrar(0);
-      this.limpiar();
+      );
     }
   }
 
@@ -80,47 +95,44 @@ export class ProductoComponent {
   }
 
   borrarproducto(id: any) {
-    this.sproducto.eliminar(id).subscribe((datos: any) => {
-      if (datos['resultado'] == 'OK') {
-        this.consulta();
+    this.sproducto.eliminar(id).subscribe(
+      (datos: any) => {
+        if (datos['resultado'] == 'OK') {
+          this.consulta();
+        }
+      },
+      (error) => {
+        console.error('Error al eliminar producto:', error);
+        // Aquí podrías mostrar un mensaje al usuario informando del error
       }
-    });
+    );
   }
 
   cargardatos(datos: any, id: number) {
     this.product.nombre = datos.nombre;
     this.product.fo_marca = datos.fo_marca;
-    this.idprod= id;
+    this.idprod = id;
     this.mostrar(1);
     this.beditar = true;
   }
 
   editar() {
     this.validar();
-
-    if (this.validnombre == true &&
-       this.validfomarca == true) {
+    if (this.validnombre == true && 
+      this.validfomarca== true) {
 
       this.sproducto.editar(this.product, this.idprod).subscribe((datos: any) => {
-        if (datos['resultado'] == 'ok') {
+        if (datos['resultado'] == 'OK') {
           this.consulta();
+          this.mostrar(0);
         }
       });
-      this.mostrar(0);
     }
   }
 
   validar() {
-    if (this.product.nombre == "") {
-      this.validnombre = false;
-    } else {
-      this.validnombre = true;
-    }
-    if (this.product.fo_marca == 0) {
-      this.validfomarca = false;
-    } else {
-      this.validfomarca = true;
-    }
+    this.validnombre = this.product.nombre != "";
+    this.validfomarca = this.product.fo_marca != 0;
   }
 
   limpiar() {
@@ -140,17 +152,4 @@ export class ProductoComponent {
         break;
     }
   }
-  eliminar() {
-    if (confirm("¿Estás seguro de eliminar el producto?")) {
-      this.sproducto.eliminar(this.idprod).subscribe((datos: any) => {
-        if (datos['resultado'] == 'OK') {
-          this.consulta();
-          Swal.fire('¡Eliminado!', 'el producto ha sido eliminado.', 'success');
-          this.mostrar(0);
-        }
-      });
-    }
-  }
-  
-  }
-
+}

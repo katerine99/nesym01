@@ -1,26 +1,41 @@
+
 <?php
-header("Access-Control-Allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
-$json = file_get_contents ("php://input");
-
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+require("../conexion.php");
 
- //$editar = "UPDATE  cliente SET nombre='FERROFRUAS S.A', celular='6017865423' WHERE id_cliente=27";
- $editar = "UPDATE  cliente  SET nombre='$params->nombre',  celular='$params->celular WHERE id_cliente='$id'";
+// Verificar que los datos recibidos sean válidos
+if (!isset($_GET['id']) || !isset($params->nombre) || !isset($params->celular)) {
+    $response = (object) [
+        'resultado' => 'Error',
+        'mensaje' => 'Datos incompletos'
+    ];
+    echo json_encode($response);
+    exit;
+}
 
+$id = $_GET['id'];
+$nombre = $params->nombre;
+$celular = $params->celular;
 
- mysqli_query($conexion, $editar) or die('no edito');
+$editar = "UPDATE cliente SET nombre='$nombre', celular='$celular' WHERE id_cliente='$id'";
 
-Class Result{}
+if (mysqli_query($conexion, $editar)) {
+    $response = (object) [
+        'resultado' => 'OK',
+        'mensaje' => 'Datos modificados'
+    ];
+} else {
+    $response = (object) [
+        'resultado' => 'Error',
+        'mensaje' => 'No se pudieron modificar los datos: ' . mysqli_error($conexion)
+    ];
+}
 
-$response = new Result ();
-$response -> resultado = 'OK';
-$response -> mensaje = 'datos modificados';
-
-
-header ('content-type: application/json');
-echo json_encode ($response);
+echo json_encode($response);
 ?>

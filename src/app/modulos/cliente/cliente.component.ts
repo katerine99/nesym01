@@ -8,158 +8,119 @@ import Swal from 'sweetalert2';
   styleUrls: ['./cliente.component.scss']
 })
 export class ClienteComponent {
-//variables globales
-verf = false;
-cliente: any;
-idclie: any;
-client = {
-  nombre: "",
-  celular: "",
-};
+  verf = false;
+  clientes: any[] = [];
+  idclie: any;
+  client= {
+    nombre: "",
+    celular: ""
+  };
+  validnombre = true;
+  validcelular= true;
+  beditar = false;
 
-//para validar
-validnombre = true;
-validcelular = true;
-beditar = false;
-constructor (private scliente: ClienteService) {}
+  constructor(private scliente: ClienteService) { }
 
-ngOnInit(): void {
-  this.consulta();
-  this.limpiar();
-
-}
-//mostrar formulario
-mostrar(dato: any) {
-  switch (dato) {
-    case 0:
-      this.verf = false;
-      this.beditar = false;
-      this.idclie = "";
-      this.limpiar();
-      break;
-    case 1:
-      this.verf = true;
-      break;
-  }
-
-}
-//limpiar
-limpiar() {
-  this.client.nombre = "";
-  this.client.celular = "";
-  
-}
-//validar
-validar() {
-  if (this.client.nombre == "") {
-    this.validnombre = false;
-  }else{
-    this.validnombre = true;
-  }
-if (this.client.celular == "") {
-    this.validcelular = false;
-  }else{
-    this.validcelular = true;
-}
- 
-  }
-
-
-
-consulta() {
-  this.scliente.consultar().subscribe((result: any) => {
-    this.cliente = result;
-   // console.log(this.usuario);
-  })
-}
-
-ingresar() {
-  //console.log(this.cat);
-  this.validar();
-  if (this.validnombre == true &&
-     this.validcelular==true) {
-
-    this.scliente.insertar(this.client).subscribe((datos: any) => {
-      if (datos['resultado'] == 'OK') {
-        //alert(datos['mensaje']);
-        this.consulta();
-      }
-    });
-    this.mostrar(0);
+  ngOnInit(): void {
+    this.consulta();
     this.limpiar();
   }
-}
-pregunta(id: any, nombre: any) {
-  console.log('entro con el id' + id);
-  Swal.fire({
-    title: '¿ Esta seguro de eliminar el cliente' + nombre + '?',
-    text: 'El proceso no podra ser revertido!',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, Eliminar!',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.borrarcliente(id);
-      Swal.fire({
-        title: 'Eliminado!',
-        text: 'El usuario ha sido eliminado.',
-        icon: 'success',
+
+  consulta() {
+    this.scliente.consultar().subscribe((result: any) => {
+      this.clientes= result;
+    });
+  }
+
+  ingresar() {
+    this.validar();
+    if (this.validnombre && this.validcelular) {
+      this.scliente.insertar(this.client).subscribe((datos: any) => {
+        if (datos.resultado === 'OK') {
+          this.consulta();
+        }
       });
+      this.mostrar(0);
+      this.limpiar();
     }
-  });
-}
-
-borrarcliente(id: any) {
-  this.scliente.eliminar(id).subscribe((datos: any) => {
-    if (datos['resultado'] == 'OK') {
-      this.consulta();
-    }
-  });
-}
-
-cargardatos(datos: any, id: number) {
-  //console.log(datos);
-  this.client.nombre = datos.nombre;
-  this.client.celular = datos.celular;
-  this.idclie = id;
-  this.mostrar(1);
-  this.beditar = true;
-}
-
-editar() {
-  this.validar();
-
-  if (
-    this.validnombre == true &&
-    this.validcelular== true
-    
-  ) {
-    this.scliente.edit(this.client).subscribe((datos: any) => {
-      if (datos['resultado'] == 'ok') {
-        // alerta datos
-        this.consulta();
-      }
-    });
-    this.mostrar(0);
   }
-}
-eliminar() {
-  if (confirm("¿Estás seguro de eliminar el cliente?")) {
-    this.scliente.eliminar(this.idclie).subscribe((datos: any) => {
-      if (datos['resultado'] == 'OK') {
-        this.consulta();
-        Swal.fire('¡Eliminado!', 'el cliente ha sido eliminado.', 'success');
-        this.mostrar(0);
+
+  pregunta(id: any, nombre: any) {
+    Swal.fire({
+      title: '¿Está seguro de eliminar el cliente ' + nombre + '?',
+      text: 'El proceso no podrá ser revertido!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, Eliminar!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.borrarclientes(id);
+        Swal.fire({
+          title: 'Eliminado!',
+          text: 'el cliente ha sido eliminado.',
+          icon: 'success',
+        });
       }
     });
   }
+
+  borrarclientes(id: any) {
+    this.scliente.eliminar(id).subscribe((datos: any) => {
+      if (datos.resultado === 'OK') {
+        this.consulta();
+      }
+    });
+  }
+
+  cargardatos(datos: any, id: number) {
+    this.client.nombre = datos.nombre;
+    this.client.celular = datos.celular;
+    this.idclie = id;
+    this.mostrar(1);
+    this.beditar = true;
+  }
+
+  editar() {
+    this.validar();
+    if (this.validnombre && this.validcelular) {
+      console.log("Datos a editar:", this.client, this.idclie);
+      this.scliente.editar(this.client, this.idclie).subscribe(
+        (datos: any) => {
+          console.log("Respuesta del servidor:", datos);
+          if (datos.resultado === 'OK') {
+            this.consulta();
+            this.mostrar(0);
+          }
+        },
+        (error) => {
+          console.error('Error al editar:', error);
+        }
+      );
+    }
+  }
+
+  validar() {
+    this.validnombre = this.client.nombre !== "";
+    this.validcelular = this.client.celular !== "";
+  }
+
+  limpiar() {
+    this.client.nombre = "";
+    this.client.celular = "";
+  }
+
+  mostrar(dato: any) {
+    switch (dato) {
+      case 0:
+        this.verf = false;
+        this.beditar = false;
+        this.idclie = "";
+        break;
+      case 1:
+        this.verf = true;
+        break;
+    }
+  }
 }
-
-}
-
-
-
-
-

@@ -1,50 +1,23 @@
 <?php
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
 $json = file_get_contents("php://input");
-
 $params = json_decode($json);
-
-if ($params === null) {
-    $response = (object) [
-        'resultado' => 'error',
-        'mensaje' => 'error_decodificacion_json'
-    ];
-    echo json_encode($response);
-    exit;
-}
 
 require("../conexion.php");
 
-$nombre = $params->nombre;
-$marca = $params->marca;
+$nombre = mysqli_real_escape_string($conexion, $params->nombre);
+$fo_marca = mysqli_real_escape_string($conexion, $params->fo_marca);
 
-if (!$conexion) {
-    $response = (object) [
-        'resultado' => 'error',
-        'mensaje' => 'error_conexion_bd'
-    ];
-    echo json_encode($response);
-    exit;
-}
+$ins = "INSERT INTO producto (nombre, fo_marca) VALUES ('$nombre', '$fo_marca')";
 
-$ins = $conexion->prepare("INSERT INTO producto (nombre, fo_marca) VALUES (?, ?)");
-$ins->bind_param("ss", $nombre, $marca);
-$ins->execute();
+mysqli_query($conexion, $ins) or die("no inserto");
 
-if ($ins->affected_rows > 0) {
-    $response = (object) [
-        'resultado' => 'ok',
-        'mensaje' => 'datos_grabados'
-    ];
-} else {
-    $response = (object) [
-        'resultado' => 'error',
-        'mensaje' => 'error_al_grabar_datos'
-    ];
-}
+class Result {}
+$response = new Result();
+$response->resultado = "OK";
+$response->mensaje = "Datos grabados";
 
-header("Content-Type: application/json");
 echo json_encode($response);
-?>

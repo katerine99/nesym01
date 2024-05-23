@@ -1,25 +1,32 @@
 <?php
-header("Access-Control-Allow-origin: *");
+header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-$json = file_get_contents ("php://input");
-
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+    require("../conexion.php");
+    
+    $id = mysqli_real_escape_string($conexion, $_GET['id']);
 
- $editar = "UPDATE  compras SET cantidad='100', total='1000' WHERE id_compras=4";
+    $editar = $conexion->prepare("UPDATE compras SET cantidad=?, total=?, fo_producto=?, fo_usuarios=?, fo_proveedor=? WHERE id_compras=?");
+    $editar->bind_param("ddiiii", $params->cantidad, $params->total, $params->fo_producto, $params->fo_usuarios, $params->fo_proveedor, $id);
+    $editar->execute();
 
-
- mysqli_query($conexion, $editar) or die('no edito');
-
-Class Result{}
-
-$response = new Result ();
-$response -> resultado = 'OK';
-$response -> mensaje = 'datos modificados';
-
-
-header ('content-type: application/json');
-echo json_encode ($response);
+    if ($editar->affected_rows > 0) {
+        class Result {}
+        $response = new Result();
+        $response->resultado = "OK";
+        $response->mensaje = "datos modificados";
+        header("Content-Type: application/json");
+        echo json_encode($response);
+    } else {
+        header("HTTP/1.1 500 Internal Server Error");
+        echo json_encode(array("message" => "Error al actualizar los datos."));
+    }
+} else {
+    header("HTTP/1.1 400 Bad Request");
+    echo json_encode(array("message" => "El parámetro 'id' es requerido y no puede estar vacío."));
+}
 ?>

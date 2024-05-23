@@ -104,17 +104,17 @@ export class ComprasComponent implements OnInit {
 
   ingresar() {
     this.validar();
-    if (this.validcantidad ==true && 
-      this.validtotal ===true && 
-
-      this.validfoproducto ==true &&
-       this.validfousuarios ==true && 
-       this.validfoproveedor==true) {
-
+    if (this.validcantidad && this.validtotal && this.validfoproducto && this.validfousuarios && this.validfoproveedor) {
       this.scompras.insertar(this.comp).subscribe((datos: any) => {
-        if (datos['resultado'] == 'OK') {
+        if (datos.resultado === 'OK') {
           this.consulta();
+          Swal.fire('¡Éxito!', 'Datos grabados con éxito.', 'success');
+        } else {
+          Swal.fire('Error', datos.mensaje, 'error');
         }
+      }, error => {
+        console.error('Error al insertar:', error);
+        Swal.fire('Error', 'Hubo un problema al intentar insertar los datos.', 'error');
       });
       this.mostrar(0);
       this.limpiar();
@@ -161,18 +161,7 @@ export class ComprasComponent implements OnInit {
     });
   }
 
-  editar() {
-    this.validar();
-    if (this.validcantidad && this.validtotal && this.validfoproducto && this.validfousuarios && this.validfoproveedor) {
-      this.scompras.editar(this.comp).subscribe((datos: any) => {
-        if (datos['resultado'] == 'ok') {
-          this.consulta();
-          this.mostrar(0);
-          this.limpiar();
-        }
-      });
-    }
-  }
+  
   eliminar() {
     if (confirm("¿Estás seguro de eliminar la compra?")) {
       this.scompras.eliminar(this.idcom).subscribe((datos: any) => {
@@ -184,5 +173,24 @@ export class ComprasComponent implements OnInit {
       });
     }
   }
-  
+  editar() {
+    this.validar();
+
+    if (
+      this.validcantidad == true &&
+      this.validtotal == true &&
+      this.validfoproducto == true &&
+      this.validfousuarios == true &&
+      this.validfoproveedor== true
+    ) {
+      this.scompras.editar(this.comp, this.idcom).subscribe((datos: any) => {
+        if (datos['resultado'] == 'ok') {
+          // alerta datos
+          this.consulta();
+        }
+      });
+      this.mostrar(0);
+    }
   }
+}
+  

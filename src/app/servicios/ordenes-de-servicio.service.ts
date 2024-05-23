@@ -1,34 +1,40 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrdenesDeServicioService {
+  private apiUrl = 'http://localhost/nesym01/src/app/php/ordenes%20de%20servicio/';
 
-  url = 'http://localhost/nesym01/src/app/php/ordenes%20de%20servicio/';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  consultar() {
-    return this.http.get(`${this.url}consulta.php`);
-
+  editar(orden: any, id: any): Observable<any> {
+    const payload = {
+      ...orden,
+      id: id,
+    };
+    return this.http.post(`${this.apiUrl}editar.php`, JSON.stringify(payload), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    });
   }
 
-  insertar(articulo: any) {
-
-    return this.http.post(`${this.url}insertar.php`, JSON.stringify(articulo));
-
-  }
-  eliminar(id: number) {
-
-    return this.http.get(`${this.url}eliminar.php?id=${id}`);
-
+  consultar(): Observable<any> {
+    return this.http.get(`${this.apiUrl}consulta.php`);
   }
 
-  editar(datos: any, id: number) {
-    return this.http.post(
-      `${this.url}editar.php?id=${id}`,
-      JSON.stringify(datos)
-    );
+  insertar(articulo: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}insertar.php`, JSON.stringify(articulo), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    });
+  }
+
+  eliminar(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}eliminar.php?id=${id}`);
   }
 }
-

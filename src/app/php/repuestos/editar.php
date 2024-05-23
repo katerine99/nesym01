@@ -1,25 +1,48 @@
 <?php
-header("Access-Control-Allow-origin: *");
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header('Content-Type: application/json');
 
-$json = file_get_contents ("php://input");
-
+// Obtener y decodificar el contenido JSON
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+// Verificar si se pudo obtener y decodificar el contenido JSON
+if ($json === false || $params === null) {
+    $response = array("resultado" => "ERROR", "mensaje" => "Error al recibir los datos JSON");
+    echo json_encode($response);
+    exit;
+}
 
- //$editar = "UPDATE  repuestos SET cantidad='30', total='300'WHERE id_repuestos=10";
- $editar = "UPDATE  repuestos SET cantidad='$params->cantidad',  total='$params->total' WHERE id_repuestos='$id'";
+require("../conexion.php");
 
- mysqli_query($conexion, $editar) or die('no edito');
+// Verificar si la conexión a la base de datos fue exitosa
+if ($conexion->connect_error) {
+    $response = array("resultado" => "ERROR", "mensaje" => "Error de conexión a la base de datos");
+    echo json_encode($response);
+    exit;
+}
 
-Class Result{}
+// Asegurarse de que el parámetro id está presente
+if (!isset($params->id)) {
+    $response = array("resultado" => "ERROR", "mensaje" => "El ID es requerido");
+    echo json_encode($response);
+    exit;
+}
 
-$response = new Result ();
-$response -> resultado = 'OK';
-$response -> mensaje = 'datos modificados';
+$id = $params->id;
+$cantidad = isset($params->cantidad) ? $params->cantidad : 0;
+$total = isset($params->total) ? $params->total : 0;
 
+$editar = "UPDATE repuestos SET cantidad='$cantidad', total='$total' WHERE id_repuestos='$id'";
+$resultado = mysqli_query($conexion, $editar);
 
-header ('content-type: application/json');
-echo json_encode ($response);
+// Verificar si la consulta fue exitosa
+if ($resultado) {
+    $response = array("resultado" => "OK", "mensaje" => "datos modificados");
+} else {
+    $response = array("resultado" => "ERROR", "mensaje" => "no se pudieron modificar los datos");
+}
+
+echo json_encode($response);
 ?>

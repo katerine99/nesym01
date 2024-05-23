@@ -24,7 +24,7 @@ export class OrdenesDeServicioComponent {
   validasistenciatecnica = true;
   beditar = false;
 
-  constructor(private sordenesdeservicio: OrdenesDeServicioService) { }
+  constructor (private sordenesdeservicio: OrdenesDeServicioService) { }
 
   ngOnInit(): void {
     this.consulta();

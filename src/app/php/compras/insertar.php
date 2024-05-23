@@ -1,25 +1,26 @@
 <?php
-
-header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
+header("Content-Type: application/json");
 
-$json= file_get_contents("php://input");
-
+$json = file_get_contents("php://input");
 $params = json_decode($json);
 
-require ("../conexion.php");
+require("../conexion.php");
 
-$ins = "INSERT INTO  compras (cantidad, total, producto, usuarios, proveedor) VALUES ('$params->cantidad', '$params->total','$params->productos', '$params->usuarios','$params->proveedor')";
+$cantidad = $params->cantidad;
+$total = $params->total;
+$fo_producto = $params->fo_producto;
+$fo_usuarios = $params->fo_usuarios;
+$fo_proveedor = $params->fo_proveedor;
 
+$ins = "INSERT INTO compras (cantidad, total, fo_producto, fo_usuarios, fo_proveedor) VALUES ($cantidad, $total, $fo_producto, $fo_usuarios, $fo_proveedor)";
 
-mysqli_query ($conexion,$ins) or die ("no inserto");
+mysqli_query($conexion, $ins) or die("no inserto");
 
-Class Result{}
+class Result {}
+$response = new Result();
+$response->resultado = "OK";
+$response->mensaje = "Datos grabados";
 
-$response = new Result ();
-$response -> resultado = "ok";
-$response -> mensaje = "datos_grabados";
-
-
-header("content-type: application/json");
 echo json_encode($response);
