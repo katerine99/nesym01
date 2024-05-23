@@ -1,91 +1,84 @@
-
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-    <div class="position-sticky pt-3 sidebar-sticky">
-      <ul class="nav flex-column">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" [routerLink]="['/dashboard']">
-            <span data-feather="home" class="align-text-bottom"></span>
-            Dashboard
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/cliente']">
-            <span data-feather="file" class="align-text-bottom"></span>
-            cliente
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/productos']">
-            <span data-feather="shopping-cart" class="align-text-bottom"></span>
-            Productos
-      
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/compras']">
-            <span data-feather="bar-chart-2" class="align-text-bottom"></span>
-            Compras
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/usuarios']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            Usuarios
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/repuestos']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            repuestos
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/reporte']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            reporte
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/proveedor']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            proveedor
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/ordenes_de_servicio']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            ordenes de servicio
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/marca']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            marca
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/intervencion_de_urgencia']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            intervencion de urgencia 
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/departamento']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            Departamento 
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/ciudad']" >
-            <span data-feather="layers" class="align-text-bottom"></span>
-            Ciudad
-    
-          </a>
-        </li>
-      </ul>
-
-    </div>
-  </nav>
- 
-
-
+  <div class="position-sticky pt-3 sidebar-sticky">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active text-dark" aria-current="page" [routerLink]="['/dashboard']">
+          <span data-feather="home" class="align-text-bottom"></span>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/cliente']">
+          <span data-feather="file" class="align-text-bottom"></span>
+          Cliente
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/productos']">
+          <span data-feather="shopping-cart" class="align-text-bottom"></span>
+          Productos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/compras']">
+          <span data-feather="bar-chart-2" class="align-text-bottom"></span>
+          Compras
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/usuarios']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Usuarios
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/repuestos']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Repuestos
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/reporte']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Reporte
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/proveedor']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Proveedor
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/ordenes_de_servicio']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Órdenes de Servicio
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/marca']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Marca
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/intervencion_de_urgencia']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Intervención de Urgencia
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/departamento']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Departamento
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" [routerLink]="['/ciudad']" >
+          <span data-feather="layers" class="align-text-bottom"></span>
+          Ciudad
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
